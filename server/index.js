@@ -21,17 +21,22 @@ express()
 
     // ---------------------------------
     .get("/", (request, response)=>{
-        response.send("Hello Hello");
+        response.send("Hello Hello 123456");
     })
 
-    // .get("/api/get-flights", getFlights) //all flight numbers
-    // .get("/api/get-flight/:_id", getFlight) //flight numbers w/ seating data 
-    // .get("/api/get-reservations", getReservations)
-    // .get("/api/get-reservation/:id", getSingleReservation)
+    // .get("/api/signin", getSignin)
 
-    // .post("/api/add-reservation", addReservation)
+    // .get("/api/get-blog-posts", getAllPosts)
 
-    // .patch("/api/update-reservation", updateReservation)
+    // .post("/api/comment-on-post", addComment)
+
+    // .post("/api/add-post", addNewPost)
+
+    // .patch("/api/edit-post", updatePost)
+
+    // .post("/api/add-album", addNewAlbum)
+
+    // .patch("/api/edit-album", updateAlbum)
 
     // .delete("/api/delete-reservation/:id", deleteReservation)
 
