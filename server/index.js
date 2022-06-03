@@ -24,7 +24,6 @@ express()
         response.send("Hello Hello 123456");
     })
 
-    // .get("/api/signin", getSignin)
 
     // .get("/api/get-blog-posts", getAllPosts)
 
@@ -40,7 +39,7 @@ express()
 
     // .delete("/api/delete-reservation/:id", deleteReservation)
 
-
+    // .get("/api/signin", getSignin)
 
     // ---------------------------------
 
