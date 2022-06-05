@@ -20,13 +20,13 @@ const NavBar =()=>{
 
                 <NavButton>
                     <li>
-                        <Link to ="/create-new-post">Create Post</Link>
+                        <Link to ="/album">Album</Link>
                     </li>
                 </NavButton>
 
                 <NavButton>
                     <li>
-                        <Link to ="/album">Album</Link>
+                        <Link to ="/create-new-post">Create Post</Link>
                     </li>
                 </NavButton>
 
@@ -43,7 +43,23 @@ const NavBar =()=>{
 export default NavBar;
 
 const Wrapper=styled.div`
+    background-color: #DED5CA ;
+    height: 40px;
+
+    ul{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    a{
+        text-decoration: none;
+        color: #464543;
+    }
 `
 
 const NavButton=styled.div`
+    margin-right: 20px;
+    font-size: 16px;
+    cursor: pointer;
 `

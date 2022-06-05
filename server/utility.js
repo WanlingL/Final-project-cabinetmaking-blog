@@ -1,5 +1,5 @@
 //Receives new blog post
-export const makeNewBlogObject = (text) => {
+export const makeNewPostObject = (text) => {
     
     const result = {}
     result._id = Date.now()

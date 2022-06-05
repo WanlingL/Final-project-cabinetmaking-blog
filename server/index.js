@@ -5,7 +5,8 @@ const express = require("express");
 const morgan = require("morgan");
 
 const {
-  
+    getAllPosts,
+    addNewPost,
 } = require("./handlers");
 
 express()
@@ -20,16 +21,16 @@ express()
     .use(express.static("public"))
 
     // ---------------------------------
-    .get("/", (request, response)=>{
-        response.send("Hello Hello 123456");
-    })
+    // .get("/", (request, response)=>{
+    //     response.send("Hello Hello 123456");
+    // })
 
 
-    // .get("/api/get-blog-posts", getAllPosts)
+    .get("/api/get-blog-posts", getAllPosts)
+
+    .post("/api/add-post", addNewPost)
 
     // .post("/api/comment-on-post", addComment)
-
-    // .post("/api/add-post", addNewPost)
 
     // .patch("/api/edit-post", updatePost)
 

@@ -54,3 +54,10 @@ font-family: Verdana, Geneva, Tahoma, sans-serif;
 
 `;
 export default GlobalStyles;
+
+// /* Color Theme Swatches in Hex */
+// .IG-palette--1-hex { color: #464543; }
+// .IG-palette--2-hex { color: #DED5CA; }
+// .IG-palette--3-hex { color: #F7E8D8; }
+// .IG-palette--4-hex { color: #6F675C; }
+// .IG-palette--5-hex { color: #C89B7D; }

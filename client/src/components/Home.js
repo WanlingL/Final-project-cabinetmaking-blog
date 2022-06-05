@@ -1,10 +1,20 @@
 import styled from "styled-components";
+import Header from "./Header";
+import Blog from "./Blog";
+import SideBar from "./SideBar";
+
+
 
 const Home =()=>{
 
     return(
         <Wrapper>
-        Home
+            <Header />
+
+            <MainHome>
+                <Blog />
+            </MainHome>
+
         </Wrapper>
     )
 };
@@ -12,4 +22,11 @@ const Home =()=>{
 export default Home;
 
 const Wrapper=styled.div`
+
+`
+const MainHome = styled.div`
+    display: flex;
+    justify-content: center;
+    align-content: center;
+
 `
