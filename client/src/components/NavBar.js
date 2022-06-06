@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useAuth0 } from '@auth0/auth0-react';
+import { useContext } from "react";
+import {LoginButton, LogoutButton, Profile} from "../utility"
 
 const NavBar =()=>{
+    const {isLoading, user} = useAuth0();
 
     return(
         <Wrapper>
@@ -32,7 +36,11 @@ const NavBar =()=>{
 
                 <NavButton>
                     <li>
-                        <Link to ="/signin">Signin</Link>
+                        {/* <Link to ="/signin">Signin</Link> */}
+                        <LoginButton type="submit"/>
+                        <LogoutButton type="submit"/>
+                        <Profile />
+                        {console.log("Profile", Profile)}
                     </li>
                 </NavButton>
             </ul>
