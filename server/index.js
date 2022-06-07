@@ -6,8 +6,11 @@ const morgan = require("morgan");
 
 const {
     getAllPosts,
+    getSinglePost,
     addNewPost,
-    getSignin,
+    getSigninUser,
+    updatePost,
+    addComment,
 } = require("./handlers");
 
 express()
@@ -29,17 +32,19 @@ express()
 
     .get("/api/get-blog-posts", getAllPosts)
 
+    .get("/api/get-blog-post/:id", getSinglePost)
+
     .post("/api/add-post", addNewPost)
 
-    // .post("/api/comment-on-post", addComment)
+    .patch("/api/edit-post/:id", updatePost)
 
-    // .patch("/api/edit-post", updatePost)
+    .post("/api/comment-on-post", addComment)
 
     // .post("/api/add-album", addNewAlbum)
 
     // .patch("/api/edit-album", updateAlbum)
 
-    .get("/api/signin", getSignin)  
+    .post("/api/signin/:id", getSigninUser)  
 
     // ---------------------------------
 

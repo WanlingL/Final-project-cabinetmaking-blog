@@ -17,6 +17,7 @@ const CreateNewPost =()=>{
             method:"POST",
             body:JSON.stringify({
                 id:uuidv4(),
+                datePosted: new Date,
                 imgUrl:"null",
                 title:inputTitle,
                 content:inputContent

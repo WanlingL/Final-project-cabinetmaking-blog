@@ -38,7 +38,6 @@ export const Profile = () => {
   //   const { name, email } = user;
   // }
 
-
   // if (isLoading) {
   //   return <div>Loading ...</div>;
   // }
@@ -46,9 +45,9 @@ export const Profile = () => {
   return (
     isAuthenticated && (
       <div>
-        <h2>{user.name}</h2>
-        <p>{user.email}</p>
-        {JSON.stringify(user,null,2)}
+        <h2>{user.given_name}</h2>
+        {/* <p>{user.email}</p> */}
+        {/* {JSON.stringify(user,null,2)} */}
         {/* <img src={user.picture} alt={user.name} /> */}
         
       </div>

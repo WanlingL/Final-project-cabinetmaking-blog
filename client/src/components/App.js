@@ -3,10 +3,11 @@ import {
     Routes,
     Route,
   } from "react-router-dom";
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { UserContext } from "./Context/UserContext";
 
 //Links
 import GlobalStyles from "./GlobalStyles";
@@ -23,6 +24,22 @@ import SideBar from "./SideBar";
 
 const App =()=>{
     const { isLoading, user } = useAuth0();
+    const {posts, setPosts} = useContext(UserContext);
+    const {isLoaded, setIsLoaded} = useContext(UserContext);
+
+        // Get all post-----------------------------------------
+        useEffect(() => {
+            fetch("/api/get-blog-posts")
+                .then((response) => response.json())
+                .then((data) => {
+                    setPosts(data.data);
+                    setIsLoaded(true);
+                    // console.log("/api/get-blog-posts data data",data.data)
+                })
+                .catch((error) => {
+                console.log("/api/get-blog-posts error", error);
+                });
+        }, []);  
 
     // if (isLoading) {
     //     return <div><CircularProgress /></div>;
@@ -38,7 +55,7 @@ const App =()=>{
                         <Routes>
                             <Route path="/" element={<Home />} />
                             <Route path="/blog" element={<Blog />} />
-                            <Route path="/blog/:postId" elementment={<SinglePost />} />
+                            <Route path="/blog/:postId" element={<SinglePost />} />
                             <Route path="/create-new-post" element={<CreateNewPost />} />
                             <Route path="/album" element={<Album />} />
                         </Routes>

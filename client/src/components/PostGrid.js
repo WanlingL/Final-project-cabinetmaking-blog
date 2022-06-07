@@ -2,34 +2,29 @@ import styled from "styled-components";
 import postCover from "../assets/postCover.jpg"
 import { UserContext } from "./Context/UserContext";
 import { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const PostGrid =()=>{
 
     const {posts, setPosts} = useContext(UserContext);
     const {isLoaded, setIsLoaded} = useContext(UserContext);
-    
-    // useEffect(() => {
-    //     fetch("/api/get-blog-posts")
-    //       .then((response) => response.json())
-    //       .then((data) => {
-    //         setPosts(data.data);
-    //         setIsLoaded(true);
-    //         console.log("data data",data.data)
-    //       })
-    //       .catch((error) => {
-    //         console.log("PostGrid.js error", error);
-    //       });
-    //   }, []);
 
+    
     return(
         <Wrapper>
             <img src={postCover}/>
-            <PostInfo>
-
-                <h2>Post title</h2>
-                <p>Post  date</p>
-
-            </PostInfo>
+            
+        {posts.map((post)=>{
+            return(
+                <Link to={`/blog/${post.id}`}>
+                    <PostInfo key={post.id}>
+                        <h2>{post.title}</h2>
+                        <p>{post.datePosted}</p>
+                    </PostInfo>
+                </Link>
+            )
+        })}
+            
         </Wrapper>
     )
 };
@@ -48,6 +43,6 @@ img{
 `
 const PostInfo=styled.div`
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
 `
