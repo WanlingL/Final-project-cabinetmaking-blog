@@ -40,7 +40,6 @@ const NavBar =()=>{
                         <LoginButton type="submit"/>
                         <LogoutButton type="submit"/>
                         <Profile />
-                        {console.log("Profile", Profile)}
                     </li>
                 </NavButton>
             </ul>

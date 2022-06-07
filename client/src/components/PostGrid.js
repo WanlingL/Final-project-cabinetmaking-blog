@@ -1,15 +1,32 @@
 import styled from "styled-components";
 import postCover from "../assets/postCover.jpg"
-
+import { UserContext } from "./Context/UserContext";
+import { useContext, useEffect, useState } from "react";
 
 const PostGrid =()=>{
 
+    const {posts, setPosts} = useContext(UserContext);
+    const {isLoaded, setIsLoaded} = useContext(UserContext);
+    
+    // useEffect(() => {
+    //     fetch("/api/get-blog-posts")
+    //       .then((response) => response.json())
+    //       .then((data) => {
+    //         setPosts(data.data);
+    //         setIsLoaded(true);
+    //         console.log("data data",data.data)
+    //       })
+    //       .catch((error) => {
+    //         console.log("PostGrid.js error", error);
+    //       });
+    //   }, []);
+
     return(
         <Wrapper>
-
             <img src={postCover}/>
             <PostInfo>
-                <h2>Post Title</h2>
+
+                <h2>Post title</h2>
                 <p>Post  date</p>
 
             </PostInfo>

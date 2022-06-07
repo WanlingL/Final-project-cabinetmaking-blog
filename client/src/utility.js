@@ -32,7 +32,12 @@ export const LogoutButton = () => {
 
 //User---------------------------------------------------
 export const Profile = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated} = useAuth0();
+
+  // if(user){
+  //   const { name, email } = user;
+  // }
+
 
   // if (isLoading) {
   //   return <div>Loading ...</div>;
@@ -42,9 +47,10 @@ export const Profile = () => {
     isAuthenticated && (
       <div>
         <h2>{user.name}</h2>
+        <p>{user.email}</p>
         {JSON.stringify(user,null,2)}
         {/* <img src={user.picture} alt={user.name} /> */}
-        {/* <p>{user.email}</p> */}
+        
       </div>
     )
   );

@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const {
     getAllPosts,
     addNewPost,
+    getSignin,
 } = require("./handlers");
 
 express()
@@ -38,9 +39,7 @@ express()
 
     // .patch("/api/edit-album", updateAlbum)
 
-    // .delete("/api/delete-reservation/:id", deleteReservation)
-
-    // .get("/api/signin", getSignin)
+    .get("/api/signin", getSignin)  
 
     // ---------------------------------
 

@@ -63,11 +63,55 @@ const addNewPost = async (request, response)=>{
 
     const client = new MongoClient(MONGO_URI, options);
     // const newPostEntry = makeNewPostObjec(request.body)
+    console.log("request.body",request.body)
 
     try{
         await client.connect();
         const db = client.db("final_blog");
 
+        await db.collection("posts").insertOne(request.body)
+        response.status(200).json({
+            status:200,
+            message: "new post added"
+        })
+
+
+        client.close();
+        console.log("addNewPost disconnected!");
+    }
+    catch(err){
+        response.status(400).json({
+            status:400,
+            message: "new post couldn't be added"
+        })
+        console.log(err.stack);
+    }
+};
+
+//--------------------------------------------------------------------------
+const getSignin = async (request, response) =>{
+    const client = new MongoClient(MONGO_URI, options);
+    const userId = request.params.id;
+
+    try{
+        await client.connect();
+        const db = client.db("final_blog");
+        const result = await db.collection("user").find({userId});
+        console.log("result", result)
+
+        if(result){
+            response.status(200).json({
+                status: 200,
+                clientReservation,
+                data: result,
+                message: "user found"
+            })
+        }else{
+            response.status(404).json({
+                status: 404,
+                message: "user not found"
+            })
+        }
 
         client.close();
         console.log("addNewPost disconnected!");
@@ -81,4 +125,5 @@ const addNewPost = async (request, response)=>{
 module.exports = {
     getAllPosts,
     addNewPost,
+    getSignin,
 };

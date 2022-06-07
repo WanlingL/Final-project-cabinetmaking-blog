@@ -14,7 +14,12 @@ const Header = ()=>{
 export default Header;
 
 const Wrapper=styled.div`
-    margin-top: 60px;
+    margin-top: 50px;
+
+h2{
+    font-size: 30px;
+    text-align: center;
+}
 
 img{//banner
     background-repeat: no-repeat;
@@ -23,6 +28,5 @@ img{//banner
     object-fit: cover;
     height: 350px;
     width: 100%;
-
 }
 `
