@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import PostGrid from "./PostGrid";
-import SinglePost from "./SinglePost";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "./Context/UserContext";
 

@@ -1,9 +1,6 @@
 import styled from "styled-components";
 import Header from "./Header";
 import Blog from "./Blog";
-import SideBar from "./SideBar";
-
-
 
 const Home =()=>{
 

@@ -4,8 +4,6 @@ import about from "../assets/about.jpg"
 
 const SideBar =()=>{
 
-    
-
     return(
         <Wrapper>
             <SideBarItems>

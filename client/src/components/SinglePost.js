@@ -1,48 +1,15 @@
 import styled from "styled-components";
-import tree from "../assets/tree.jpg";
 import { useParams } from "react-router-dom";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import moment from "moment";
 
 const SinglePost = () => {
   const { postId } = useParams();
+
   const [singlePost, setSinglePost] = useState({});
   const [name, setName] = useState("")
   const [comment, setComment] = useState("");
   const [success, setSuccess] = useState(false);
-
-  // not able to receive request body
-  const commentSubmitHandler = (e) => {
-    e.preventDefault();
-
-    const commentBody={
-      _id: postId,
-      name,
-      time: moment().format("DD-MM-YYYY, hh:mm:ss a"),
-      text: comment,
-    }
-      console.log("commentBody",commentBody)
-    
-      fetch("/api/comment-on-post", {
-      method: "POST",
-      body: JSON.stringify({
-        test:"1"
-      }),
-
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status === 200) {
-          setSuccess(true);
-        } else {
-          setSuccess(false);
-        }
-      });
-  };
 
   useEffect(() => {
     fetch(`/api/get-blog-post/${postId}`)
@@ -55,6 +22,35 @@ const SinglePost = () => {
         console.log("singlePost", error);
       });
   }, []);
+
+  // not able to comment twice in the same post
+  const commentSubmitHandler = (e) => {
+    e.preventDefault();
+    
+      fetch("/api/comment-on-post", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          _id: postId,
+          name,
+          time: moment().format("DD-MM-YYYY, hh:mm:ss a"),
+          text: comment,
+        }),
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("data",data)
+        
+        if (data.status === 200) {
+          setSuccess(true);
+        } else {
+          setSuccess(false);
+        }
+      });
+  };
 
   return (
     <Wrapper>

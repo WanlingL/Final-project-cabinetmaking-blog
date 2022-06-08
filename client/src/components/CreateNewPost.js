@@ -15,6 +15,10 @@ const CreateNewPost =()=>{
 
         fetch("/api/add-post", {
             method:"POST",
+            headers:{
+                Accept: "application/json",
+                "Content-Type":"application/json"
+            },
             body:JSON.stringify({
                 id:uuidv4(),
                 datePosted: new Date,
@@ -22,10 +26,7 @@ const CreateNewPost =()=>{
                 title:inputTitle,
                 content:inputContent
             }),
-            headers:{
-                Accept: "application/json",
-                "Content-Type":"application/json"
-            },
+            
         })
         .then((res)=>res.json())
         .then((data)=>{
@@ -36,7 +37,6 @@ const CreateNewPost =()=>{
             }
         })
     };
-
 
     return(
         <Wrapper>

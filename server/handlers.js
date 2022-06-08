@@ -101,7 +101,7 @@ const addNewPost = async (request, response) => {
     });
 
     client.close();
-    console.log("addNewPost disconnected!");
+    // console.log("addNewPost disconnected!");
   } catch (err) {
     response.status(400).json({
       status: 400,
@@ -177,16 +177,17 @@ const addComment = async (request, response) => {
 
     client.close();
       console.log("addComment disconnected!");
+
   } catch (err) {
-    response.status(400).json({
-        status: 400,
-        message: "fail to add new comment",
-      });
-    console.log(err.stack);
+      response.status(400).json({
+          status: 400,
+          message: "fail to add new comment",
+        });
+      console.log(err.stack);
   }
 };
 
-//get comments-----------------------------------------------------
+//get comments------------------------------------------------------
 //findMany
 
 //Get user----------------------------------------------------------
@@ -222,7 +223,7 @@ const getSigninUser = async (request, response) => {
     }
 
     client.close();
-    console.log("getSigninUser disconnected!");
+    // console.log("getSigninUser disconnected!");
   } catch (err) {
     console.log(err.stack);
   }
