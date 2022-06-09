@@ -11,7 +11,11 @@ const {
     getSigninUser,
     updatePost,
     addComment,
-    getPostComments
+    getPostComments,
+    addNewAlbum,
+    getAllAlbums,
+    uploadImage,
+    getAllimages
 } = require("./handlers");
 
 express()
@@ -24,6 +28,11 @@ express()
 
     // Any requests for static files will go into the public folder
     .use(express.static("public"))
+
+    //cloudinary
+    .use(express.json({limit:"50mb"})) // allow to parse higher limit pf megabite
+    .use(express.urlencoded({limit:"50mb", extended:true}))
+
 
     // ---------------------------------
     // .get("/", (request, response)=>{
@@ -43,9 +52,15 @@ express()
 
     .get("/api/get-comments", getPostComments)
 
-    // .post("/api/add-album", addNewAlbum)
+    .post("/api/add-album", addNewAlbum)
+
+    .get("/api/add-albums", getAllAlbums)
 
     // .patch("/api/edit-album", updateAlbum)
+
+    .post("/api/upload", uploadImage)
+
+    .get("/api/images", getAllimages)
 
     .post("/api/signin/:id", getSigninUser)  
 

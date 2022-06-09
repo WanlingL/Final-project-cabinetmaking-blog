@@ -73,7 +73,8 @@ const SinglePost = () => {
   
   return (
     <Wrapper>
-      {updatedMode ? <UpdatePost title ={singlePost.title} content = {singlePost.content}/> : 
+      {updatedMode ? <UpdatePost title ={singlePost.title} content = {singlePost.content} updateMode={setUpdateMode}/> : 
+      //past "updateMode={setUpdateMode}" in order to turn false back after save in the Updated component
       <>
         <Content>
           <h2>{singlePost.title}</h2>
@@ -81,7 +82,7 @@ const SinglePost = () => {
         </Content>    
 
         <UpdateButton>
-        <button onClick={()=> setUpdateMode(true)}>
+          <button onClick={()=> setUpdateMode(true)}>
           Edit
         </button>
         </UpdateButton>

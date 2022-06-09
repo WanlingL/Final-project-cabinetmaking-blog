@@ -1,10 +1,12 @@
 "use strict";
 
+const { response } = require("express");
+const { request } = require("http");
 const { MongoClient } = require("mongodb");
 const path = require("path");
 require("dotenv").config({ path: "./.env" });
 const { v4: uuidv4 } = require('uuid');
-
+const {cloudinary} = require("./cloudinary");
 
 
 //create env file and import it
@@ -227,8 +229,95 @@ const getPostComments = async (request, response) =>{
       message: err.message,
     });
   }
-}
+};
 
+// add album--------------------------------------------------
+const addNewAlbum = async (request, response) =>{
+  const client = new MongoClient(MONGO_URI, options);
+
+  try{
+    await client.connect();
+    const db = client.db("final_blog");
+
+    await db.collection("albums").insertOne(request.body);
+    response.status(200).json({
+      status: 200,
+      message:"new album added"
+    });
+
+    client.close();
+      console.log("ddNewAlbum disconnected!");
+  } catch(err){
+      response.status(400).json({
+        status: 400,
+        message: "new album cannot be add",
+      });
+      console.log(err.stack);
+  }
+};
+
+//get All Albums----------------------------------------------
+
+const  getAllAlbums = async (request, response) =>{
+  
+};
+
+//update album-------------------------------------------------
+
+//add images to cloudinary-------------------------------------
+const uploadImage = async( request, response) =>{
+  // const client = new MongoClient(MONGO_URI, options);
+
+  try{
+    // await client.connect();
+    // const db = client.db("final_blog");
+
+    const image = request.body.data;
+    const uploadResponse= await cloudinary.uploader.upload(image, {
+      upload_preset: "final_project"
+    })
+    console.log("uploadResponse",uploadResponse);
+
+    //going to mongodb?
+    // await db.collection("albums").insertOne(request.body);
+
+    response.status(200).json({
+      status: 200,
+      message:"new image added"
+    })
+
+  }catch(err){
+    response.status(400).json({
+      status: 400,
+      message: "new image cannot be add",
+    });
+    console.log(err.stack);
+  }
+};
+
+//get all images from cloudinary--------------------------------
+const getAllimages = async (request, response) =>{
+
+  try{
+    const {resources} = await cloudinary.search.expression('folder: final_project')
+    .sort_by('public_id','desc')
+    .max_results(30)
+    .execute();
+
+    const publicIds = resources.map((file) => file.public_id);
+      response.status(200).json({
+        stauts:200,
+        data: publicIds,
+        message: "images found"
+    })
+
+  }catch(err){
+      response.status(400).json({
+        stauts: 400,
+        message: "something went wrong"
+      })
+  }
+};
 //Get user------------------------------------------------------
 const getSigninUser = async (request, response) => {
   const client = new MongoClient(MONGO_URI, options);
@@ -277,4 +366,8 @@ module.exports = {
   updatePost,
   addComment,
   getPostComments,
+  addNewAlbum,
+  getAllAlbums,
+  uploadImage,
+  getAllimages
 };

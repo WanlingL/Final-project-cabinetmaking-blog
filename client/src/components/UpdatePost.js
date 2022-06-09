@@ -2,14 +2,13 @@ import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useState } from "react";
 
-const UpdatePost = ({title, content})=>{
+const UpdatePost = ({title, content, updateMode})=>{
     const navigate = useNavigate();
     const { postId } = useParams();
 
     const [editedTitle, setEditedTitle] = useState(title);
     const [editedContent, setEditedContent] = useState(content);
     const [success, setSuccess] = useState(false);
-    const [updatedMode, setUpdateMode] = useState(false)
 
     const handlePostUpdated = (e) =>{
         e.preventDefault();
@@ -31,7 +30,7 @@ const UpdatePost = ({title, content})=>{
             if (data.status === 200) {
               navigate(`/blog/${postId}`)
               setSuccess(true);
-              setUpdateMode(true)
+              updateMode(false)//turn back to unEdit mode
             } else {
               setSuccess(false);
             }

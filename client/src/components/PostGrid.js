@@ -12,10 +12,10 @@ const PostGrid =()=>{
     return(
         <Wrapper>
             
-        {posts.map((post, key)=>{
+        {posts.map((post, index)=>{
             return(
                 <Link to={`/blog/${post.id}`}>
-                    <PostInfo key={post.id}>
+                    <PostInfo key={index}>
                         <img src={post.imgUrl}/>
                         <h2>{post.title}</h2>
                         <p>{post.datePosted}</p>

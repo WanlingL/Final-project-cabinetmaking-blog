@@ -5,6 +5,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import moment from "moment";
 
+
 const CreateNewPost =()=>{
     const[inputTitle, setinputTitle] =useState ("");
     const[inputContent, setInputContent] =useState("");
@@ -27,7 +28,7 @@ const CreateNewPost =()=>{
                 content:inputContent
             }),            
         })
-        .then((res)=>res.json())
+        .then((response)=>response.json())
         .then((data)=>{
             if(data.status===200){
                 setSuccess(true)
@@ -39,11 +40,9 @@ const CreateNewPost =()=>{
 
     return(
         <Wrapper>
-            <img src={tree} />
-            <form onSubmit={postSubmitHandler}>
-                
+            <img src={tree} />        
+            <form onSubmit={postSubmitHandler}>                           
                 <InputGroup>
-                    <input type="file"></input>
                     <input onChange={(e)=>{setinputTitle(e.target.value)}}
                         type = "text"
                         placeholder="Title"/>
