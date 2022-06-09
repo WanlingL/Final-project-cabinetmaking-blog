@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-
+ 
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
@@ -51,6 +51,7 @@ export const UserProvider = ({ children }) => {
         setPosts,
         isLoaded,
         setIsLoaded,
+
       }}
     >
       {children}

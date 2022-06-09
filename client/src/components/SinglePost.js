@@ -2,15 +2,19 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import moment from "moment";
+import UpdatePost from "./UpdatePost";
 
 const SinglePost = () => {
   const { postId } = useParams();
 
   const [singlePost, setSinglePost] = useState({});
+  const [postComments, setPostComments] = useState({})
   const [name, setName] = useState("")
   const [comment, setComment] = useState("");
   const [success, setSuccess] = useState(false);
+  const [updatedMode, setUpdateMode] = useState(false)
 
+  //calling post content
   useEffect(() => {
     fetch(`/api/get-blog-post/${postId}`)
       .then((response) => response.json())
@@ -23,7 +27,22 @@ const SinglePost = () => {
       });
   }, []);
 
-  // not able to comment twice in the same post
+
+   //calling post comment(using request.query)
+   useEffect(() => {
+    fetch(`/api/get-comments?post=${postId}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("data.data",data.data)
+        setPostComments(data.data);
+      })
+      .catch((error) => {
+        console.log("post comment", error);
+      });
+  }, []);
+
+
+  //submit comment
   const commentSubmitHandler = (e) => {
     e.preventDefault();
     
@@ -34,7 +53,7 @@ const SinglePost = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          _id: postId,
+          post: postId, //replace _id to post, so the _id will be the unique id
           name,
           time: moment().format("DD-MM-YYYY, hh:mm:ss a"),
           text: comment,
@@ -51,36 +70,114 @@ const SinglePost = () => {
         }
       });
   };
-
+  
   return (
     <Wrapper>
-      {singlePost.title}
+      {updatedMode ? <UpdatePost title ={singlePost.title} content = {singlePost.content}/> : 
+      <>
+        <Content>
+          <h2>{singlePost.title}</h2>
+          <p>{singlePost.content}</p>
+        </Content>    
+
+        <UpdateButton>
+        <button onClick={()=> setUpdateMode(true)}>
+          Edit
+        </button>
+        </UpdateButton>
+      </>
+      }
+      
 
       <form onSubmit={commentSubmitHandler}>
-        <input onChange= {(e)=>{
-          setName(e.target.value)
-        }} type="text" placeholder="name" />
+        <input onChange= {(e)=>{setName(e.target.value)}} type="text"
+        placeholder="Your Name" />
 
         <TextArea>
           <textarea
-            onChange={(e) => {
-              setComment(e.target.value);
-            }}
+            onChange={(e) => {setComment(e.target.value);}}
             type="text"
             placeholder="Start writting your comment here..."
           ></textarea>
         </TextArea>
+
         <button>Submit</button>
       </form>
       {success && <SuccessMessage>Comment Created</SuccessMessage> }
 
+      {/* render is probably trying to map before it is an array. what is this??How it work?? */}
+      {postComments && Array.isArray(postComments) && postComments.map((postComment,key)=>{
+        return(
+          <Comments key={postComment.time}>
+            <p>{postComment.name}</p>
+            <p>{postComment.time}</p>
+            <p>{postComment.text}</p>
+          </Comments>
+        )
+      })}
+      
     </Wrapper>
   );
 };
 
 export default SinglePost;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  align-content: center;
+  align-items: center;
+  margin-top: 50px;
+  margin-left: 50px;
 
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+input{
+  /* width:200px; */
+  padding: 4px 10px;
+  margin-top: 50px;
+}
+
+textarea{
+    padding: 10px;
+    width:40vw;
+    height: 50px;
+    margin-top: 10px;
+}
+
+button{
+    margin-top: 10px;
+    border: none;
+    padding: 8px;
+    width: 100px;
+    font-size: 15px;
+    cursor: pointer;
+
+    :hover {
+      background-color: #C89B7D;
+    }
+}
+
+`;
+const Content = styled.div`
+  h2{
+    font-size: 20px;
+  }
+  
+  p{
+    margin-top: 20px;
+  }
+`;
+const UpdateButton = styled.div`
+    /* justify-content: left;
+    align-content: left;
+    align-items: left; */
+`;
 const TextArea = styled.div``;
 const SuccessMessage = styled.div``;
+
+const Comments = styled.div``;

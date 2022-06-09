@@ -3,6 +3,9 @@
 const { MongoClient } = require("mongodb");
 const path = require("path");
 require("dotenv").config({ path: "./.env" });
+const { v4: uuidv4 } = require('uuid');
+
+
 
 //create env file and import it
 const { MONGO_URI } = process.env;
@@ -111,7 +114,7 @@ const addNewPost = async (request, response) => {
   }
 };
 
-//updated post--------------------------------------------------------------
+//updated post-------------------------------------------------
 
 const updatePost = async (request, response) => {
   const client = new MongoClient(MONGO_URI, options);
@@ -123,20 +126,26 @@ const updatePost = async (request, response) => {
     const query = { id };
     const { title, content } = request.body;
     const newValues = { $set: { title: title, content: content } };
-    console.log("newValues", newValues);
+    // console.log("newValues", newValues);
 
     await client.connect();
     const db = client.db("final_blog");
 
-    // //grab the old post
+    //grab the old post
     const oldPost = await db.collection("posts").findOne({ id });
     console.log("oldPost", oldPost);
 
+    if(!oldPost){
+      response.status(404).json({
+        status: 404,
+        message: "post cannot be found",
+      });
+      return
+    }
+
     //updated the new post
-    const updatedPost = await db
-      .collection("posts")
-      .updateOne(query, newValues);
-    console.log("updatedPost", updatedPost);
+    const updatedPost = await db.collection("posts").updateOne(query, newValues);
+    // console.log("updatedPost", updatedPost);
 
     if (updatedPost) {
       response.status(200).json({
@@ -144,14 +153,15 @@ const updatePost = async (request, response) => {
         ...request.body,
         message: "post updated",
       });
+
     } else {
-      response.status(400).json({
-        status: 400,
+      response.status(404).json({
+        status: 404,
         message: "post cannot be update",
       });
     }
     client.close();
-    //    console.log("updatePost disconnected!");
+    //  console.log("updatePost disconnected!");
   } catch (err) {
     console.log(err.stack);
   }
@@ -163,18 +173,20 @@ const addComment = async (request, response) => {
     // console.log("request.body", request.body)
     
   try {
-    const { _id, time, text, name } = request.body;
+    const { post, time, text, name } = request.body;
     await client.connect();
     const db = client.db("final_blog");
-
-    const comment = {_id, name,time,text};
+    const _id = uuidv4();
+    const comment = {_id, post, name,time,text};
 
     await db.collection("comments").insertOne(comment);
-    response.status(200).json({
-        status: 200,
-        message: "new comment added",
-      });
 
+if(comment){
+  response.status(200).json({
+    status: 200,
+    message: "new comment added",
+  });
+}
     client.close();
       console.log("addComment disconnected!");
 
@@ -187,10 +199,37 @@ const addComment = async (request, response) => {
   }
 };
 
-//get comments------------------------------------------------------
-//findMany
+//get comments on the post--------------------------------------------
+const getPostComments = async (request, response) =>{
+  const client = new MongoClient(MONGO_URI, options);
 
-//Get user----------------------------------------------------------
+  const{post} = request.query
+
+  try{
+    await client.connect();
+    const db = client.db("final_blog");
+
+    const result = await db.collection("comments").find({post}).toArray();
+
+    response.status(200).json({
+      status: 200,
+      data: result,
+      message: "comments found",
+    });
+
+    client.close();
+    console.log("getPostComments disconnected!");
+  }
+  catch (err) {
+    console.log(err.message);
+    response.status(500).json({
+      status: 500,
+      message: err.message,
+    });
+  }
+}
+
+//Get user------------------------------------------------------
 const getSigninUser = async (request, response) => {
   const client = new MongoClient(MONGO_URI, options);
 
@@ -202,9 +241,9 @@ const getSigninUser = async (request, response) => {
     const db = client.db("final_blog");
 
     //findOne (using email) within collection of users
-    //If you find one, respond with that found user object
+    //If find one, respond with that found user object
     const result = await db.collection("users").findOne({ email });
-    console.log("result", result);
+    // console.log("result", result);
 
     if (result) {
       response.status(200).json({
@@ -214,7 +253,8 @@ const getSigninUser = async (request, response) => {
       });
     } else {
       const newUser = await db.collection("users").insertOne(request.body);
-      console.log("newUser", newUser);
+      // console.log("newUser", newUser);
+
       response.status(200).json({
         status: 200,
         ...request.body,
@@ -236,4 +276,5 @@ module.exports = {
   getSigninUser,
   updatePost,
   addComment,
+  getPostComments,
 };

@@ -35,6 +35,7 @@ const Wrapper=styled.div`
 width:385px;
 margin: 20px;
 
+
 img{
     height: 285px;
     width: 100%;

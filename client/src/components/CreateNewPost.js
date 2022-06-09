@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { FiPlusCircle } from "react-icons/fi";
 import tree from "../assets/tree.jpg";
-import { useContext, useState } from "react";
-import { UserContext } from "./Context/UserContext";
+import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
+import moment from "moment";
 
 const CreateNewPost =()=>{
     const[inputTitle, setinputTitle] =useState ("");
@@ -21,12 +21,11 @@ const CreateNewPost =()=>{
             },
             body:JSON.stringify({
                 id:uuidv4(),
-                datePosted: new Date,
+                datePosted: moment().format("DD-MM-YYYY, hh:mm:ss a"),
                 imgUrl:"null",
                 title:inputTitle,
                 content:inputContent
-            }),
-            
+            }),            
         })
         .then((res)=>res.json())
         .then((data)=>{
@@ -42,20 +41,20 @@ const CreateNewPost =()=>{
         <Wrapper>
             <img src={tree} />
             <form onSubmit={postSubmitHandler}>
+                
                 <InputGroup>
                     <input type="file"></input>
-                    <input onChange={(e)=>{
-                        setinputTitle(e.target.value)}}
+                    <input onChange={(e)=>{setinputTitle(e.target.value)}}
                         type = "text"
                         placeholder="Title"/>
                 </InputGroup>
 
                 <TextArea>
-                    <textarea onChange={(e)=>{
-                        setInputContent(e.target.value)}}
+                    <textarea onChange={(e)=>{setInputContent(e.target.value)}}
                         type = "text"
                         placeholder="Start writting here..."></textarea>
                 </TextArea>
+
                 <button>Submit</button>
             </form>
             {success && <SuccessMessage>Post Created</SuccessMessage> }

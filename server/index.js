@@ -11,6 +11,7 @@ const {
     getSigninUser,
     updatePost,
     addComment,
+    getPostComments
 } = require("./handlers");
 
 express()
@@ -39,6 +40,8 @@ express()
     .patch("/api/edit-post/:id", updatePost)
 
     .post("/api/comment-on-post", addComment)
+
+    .get("/api/get-comments", getPostComments)
 
     // .post("/api/add-album", addNewAlbum)
 
