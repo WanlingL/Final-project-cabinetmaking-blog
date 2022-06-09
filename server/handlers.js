@@ -274,7 +274,7 @@ const uploadImage = async( request, response) =>{
 
     const image = request.body.data;
     const uploadResponse= await cloudinary.uploader.upload(image, {
-      upload_preset: "final_project"
+      folder: "final_project"
     })
     console.log("uploadResponse",uploadResponse);
 
