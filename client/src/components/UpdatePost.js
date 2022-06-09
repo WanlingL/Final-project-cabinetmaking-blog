@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { useNavigate, useParams } from "react-router-dom";
 import React, { useState } from "react";
-import ViewPost from "./ViewPost";
 
 const UpdatePost = ({title, content})=>{
     const navigate = useNavigate();

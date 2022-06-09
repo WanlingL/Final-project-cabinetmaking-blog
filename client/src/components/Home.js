@@ -6,7 +6,8 @@ const Home =()=>{
 
     return(
         <Wrapper>
-            <Header />
+
+                <Header />
 
             <MainHome>
                 <Blog />
@@ -19,12 +20,11 @@ const Home =()=>{
 export default Home;
 
 const Wrapper=styled.div`
-    width: 80vw;
+    width: 85vw;
     display: flex;
     flex-direction: column;
-
-    justify-content: center;
-    align-content: center;
+    /* justify-content: center;
+    align-content: center; */
 
 `
 const MainHome = styled.div`
