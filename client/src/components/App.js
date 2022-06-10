@@ -14,10 +14,12 @@ import NavBar from "./NavBar";
 import CreateNewPost from "./CreateNewPost";
 import SinglePost from "./SinglePost";
 import SideBar from "./SideBar";
+import SingleAlbum from "./SingleAlbum";
 
 const App = () => {
   const { isLoading, user } = useAuth0();
   const { posts, setPosts } = useContext(UserContext);
+  const {albums, setAlbums} = useContext(UserContext);
   const { isLoaded, setIsLoaded } = useContext(UserContext);
 
   // Get all post-----------------------------------------
@@ -31,6 +33,21 @@ const App = () => {
       })
       .catch((error) => {
         console.log("/api/get-blog-posts error", error);
+      });
+  }, []);
+
+
+   // Get all album-----------------------------------------
+   useEffect(() => {
+    fetch("/api/get-albums")
+      .then((response) => response.json())
+      .then((data) => {
+        setAlbums(data.data);
+        setIsLoaded(true);
+        // console.log("/api/get-blog-posts data data",data.data)
+      })
+      .catch((error) => {
+        console.log("/api/get-albums error", error);
       });
   }, []);
 
@@ -51,6 +68,7 @@ const App = () => {
             <Route path="/blog/:postId" element={<SinglePost />} />
             <Route path="/create-new-post" element={<CreateNewPost />} />
             <Route path="/album" element={<Album />} />
+            <Route path="/album/:albumId" element={<SingleAlbum />} />
           </Routes>
 
           <SideBarLocation>

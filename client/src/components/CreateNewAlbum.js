@@ -21,7 +21,7 @@ const CreateNewAlbum =()=>{
             },
             body:JSON.stringify({
                 id:uuidv4(),
-                email: userInfo.email,
+                email: userInfo.data.email,
                 datePosted: moment().format("DD-MM-YYYY, hh:mm:ss a"),
                 title:inputAlbumTitle
             }),

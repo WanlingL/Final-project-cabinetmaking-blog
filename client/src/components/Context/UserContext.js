@@ -10,6 +10,7 @@ export const UserProvider = ({ children }) => {
   const { user, isAuthenticated } = useAuth0();
 
   const [posts, setPosts] = useState([]);
+  const [albums, setAlbums] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
   // const {id} = useParams();
@@ -49,6 +50,8 @@ export const UserProvider = ({ children }) => {
         setUserInfo,
         posts,
         setPosts,
+        albums,
+        setAlbums,
         isLoaded,
         setIsLoaded,
 

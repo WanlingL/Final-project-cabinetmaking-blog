@@ -259,7 +259,66 @@ const addNewAlbum = async (request, response) =>{
 //get All Albums----------------------------------------------
 
 const  getAllAlbums = async (request, response) =>{
-  
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    await client.connect();
+    const db = client.db("final_blog");
+
+    const albumInfo = await db.collection("albums").find().toArray();
+    const result = [];
+    albumInfo.forEach((album) => {
+      result.push(album);
+    });
+
+    if (result) {
+      response.status(200).json({
+        status: 200,
+        data: result,
+        message: "albums found",
+      });
+    } else {
+      response.status(404).json({
+        starus: 404,
+        message: "albums not found",
+      });
+    }
+    client.close();
+    // console.log("getAlbums disconnected!");
+  } catch (err) {
+    console.log(err.stack);
+  }
+};
+
+//Get Single Album-------------------------------------------
+
+const getSinglealbum = async (request, response) => {
+  const client = new MongoClient(MONGO_URI, options);
+
+  try {
+    const id = request.params.id;
+
+    await client.connect();
+    const db = client.db("final_blog");
+    const result = await db.collection("albums").findOne({ id });
+    console.log("result", result);
+
+    if (result) {
+      response.status(200).json({
+        status: 200,
+        data: result,
+        message: "Single album found",
+      });
+    } else {
+      response.status(404).json({
+        starus: 404,
+        message: "Single album not found",
+      });
+    }
+    client.close();
+  } catch (err) {
+    console.log(err.stack);
+  }
 };
 
 //update album-------------------------------------------------
@@ -269,25 +328,23 @@ const  getAllAlbums = async (request, response) =>{
 
 //add images to cloudinary-------------------------------------
 const uploadImage = async( request, response) =>{
-  // const client = new MongoClient(MONGO_URI, options);
+  const client = new MongoClient(MONGO_URI, options);
 
   try{
-    // await client.connect();
-    // const db = client.db("final_blog");
-
     const image = request.body.data;
     const uploadResponse= await cloudinary.uploader.upload(image, {
       folder: "final_project"
     })
     console.log("uploadResponse",uploadResponse);
 
+    await client.connect();
+    const db = client.db("final_blog");
 
+    await db.collection("albums").insertOne(uploadResponse);
+    //image[{"url":_________}] 
+    //id of album
+    //findOne
 
-    
-
-    //going to mongodb?
-    // await db.collection("albums").insertOne(request.body);
-   
     response.status(200).json({
       status: 200,
       message:"new image added"
@@ -375,6 +432,7 @@ module.exports = {
   getPostComments,
   addNewAlbum,
   getAllAlbums,
+  getSinglealbum,
   uploadImage,
   getAllimages
 };

@@ -1,12 +1,11 @@
 import styled from "styled-components";
 import { UserContext } from "./Context/UserContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 const PostGrid =()=>{
 
     const {posts, setPosts} = useContext(UserContext);
-    const {isLoaded, setIsLoaded} = useContext(UserContext);
 
     
     return(

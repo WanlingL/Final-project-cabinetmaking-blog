@@ -1,34 +1,32 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import CreateNewAlbum from "./CreateNewAlbum";
-import Upload from "./Upload";
+
 import { Image } from 'cloudinary-react';
+import AlbumGrid from "./AlbumGrid";
 
 
 const Album =()=>{
-    const [imageIds, setImageIds]= useState(null); 
-    
+    // const [imageIds, setImageIds]= useState(null); 
 
-    //call images
-    useEffect(() => {
-        fetch("/api/images")
-        .then((response)=> response.json())
-        .then((data)=>{
-            setImageIds(data.data)
-            console.log("Album: get image data",data.data)
-        })
-        .catch((error)=>{
-            console.log("Album:get image error", error);
-        });
-    }, []);
+    // //call images
+    // useEffect(() => {
+    //     fetch("/api/images")
+    //     .then((response)=> response.json())
+    //     .then((data)=>{
+    //         setImageIds(data.data)
+    //         console.log("Album: get image data",data.data)
+    //     })
+    //     .catch((error)=>{
+    //         console.log("Album:get image error", error);
+    //     });
+    // }, []);
 
     return(
         <Wrapper>
-            Album
             <CreateNewAlbum />
-            <Upload />
-             
-                {imageIds && imageIds.map((imageId, index)=>{ 
+            <AlbumGrid />            
+                {/* {imageIds && imageIds.map((imageId, index)=>{ 
                     return(
                         <Image 
                             key={index}
@@ -38,7 +36,7 @@ const Album =()=>{
                             crop="scale"
                         />
                     ) 
-                })}
+                })} */}
         </Wrapper>
     )
 };

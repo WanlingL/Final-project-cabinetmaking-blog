@@ -14,6 +14,7 @@ const {
     getPostComments,
     addNewAlbum,
     getAllAlbums,
+    getSinglealbum,
     uploadImage,
     getAllimages
 } = require("./handlers");
@@ -54,7 +55,9 @@ express()
 
     .post("/api/add-album", addNewAlbum)
 
-    .get("/api/add-albums", getAllAlbums)
+    .get("/api/get-albums", getAllAlbums)
+
+    .get("/api/get-album/:id", getSinglealbum)
 
     // .patch("/api/edit-album", updateAlbum)
 
