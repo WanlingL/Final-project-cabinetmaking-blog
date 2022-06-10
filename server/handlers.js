@@ -239,7 +239,7 @@ const addNewAlbum = async (request, response) =>{
     await client.connect();
     const db = client.db("final_blog");
 
-    await db.collection("albums").insertOne(request.body);
+    await db.collection("albums").insertOne({...request.body, url: []});
     response.status(200).json({
       status: 200,
       message:"new album added"
@@ -330,24 +330,26 @@ const getSinglealbum = async (request, response) => {
 const uploadImage = async( request, response) =>{
   const client = new MongoClient(MONGO_URI, options);
 
+  const {id} = request.body
   try{
     const image = request.body.data;
     const uploadResponse= await cloudinary.uploader.upload(image, {
-      folder: "final_project"
+      folder: "final_project",
     })
     console.log("uploadResponse",uploadResponse);
 
     await client.connect();
     const db = client.db("final_blog");
 
-    await db.collection("albums").insertOne(uploadResponse);
+    await db.collection("uploadImages").insertOne({...uploadResponse , albumName: id});
     //image[{"url":_________}] 
     //id of album
     //findOne
 
     response.status(200).json({
       status: 200,
-      message:"new image added"
+      message:"new image added",
+      data:{...uploadResponse , albumName: id}
     })
 
   }catch(err){
@@ -382,6 +384,36 @@ const getAllimages = async (request, response) =>{
       })
   }
 };
+
+//updated images url-------------------------------------------
+
+const updatedImageUrls = async(request, response) =>{
+  const client = new MongoClient(MONGO_URI, options);
+
+  try{
+    await client.connect();
+    const db = client.db("final_blog");
+
+    const {id, url} =request.body;
+    const existingAlbum = await db.collection("albums").findOne({ id });
+    if(existingAlbum){
+      const newUrls = [...existingAlbum.url, url];
+      const updatedUrls = {$set:{url:newUrls}}
+      await db.collection("albums").updateOne({id}, updatedUrls)
+    }
+    
+    response.status(200).json({
+      status: 200,
+      ...request.body,
+      message: "user added",
+    });
+    
+  }catch(err){
+    console.log("error", error)
+  }
+
+};
+
 //Get user------------------------------------------------------
 const getSigninUser = async (request, response) => {
   const client = new MongoClient(MONGO_URI, options);
@@ -433,6 +465,7 @@ module.exports = {
   addNewAlbum,
   getAllAlbums,
   getSinglealbum,
+  updatedImageUrls,
   uploadImage,
-  getAllimages
+  getAllimages,
 };

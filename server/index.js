@@ -15,6 +15,7 @@ const {
     addNewAlbum,
     getAllAlbums,
     getSinglealbum,
+    updatedImageUrls,
     uploadImage,
     getAllimages
 } = require("./handlers");
@@ -58,6 +59,8 @@ express()
     .get("/api/get-albums", getAllAlbums)
 
     .get("/api/get-album/:id", getSinglealbum)
+
+    .post("/api/updated-image-urls", updatedImageUrls)
 
     // .patch("/api/edit-album", updateAlbum)
 

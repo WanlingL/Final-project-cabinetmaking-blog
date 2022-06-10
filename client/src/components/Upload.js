@@ -1,10 +1,13 @@
 import { useState } from "react";
 import styled from "styled-components";
+import { useParams } from "react-router-dom";
 
 const Upload =()=>{
     const [fileInput, setFileInput] = useState("");
     const [selectFile, setSelectFile] = useState("");
     const [previewSource, setPreviewSource] = useState("");
+    const [uploadImages, setUploadImages] = useState({});
+    const {albumId} = useParams();
 
     const handleFileInputChange = (e) =>{
         const file = e.target.files[0]
@@ -40,12 +43,25 @@ const Upload =()=>{
                 "Content-Type":"application/json"
             },
             body: JSON.stringify({
-                data:base64EncodedImage
+                data:base64EncodedImage,
+                id: albumId
             }),
         })
         .then((response)=>response.json())
         .then((data)=>{
-            console.log("data", data)
+            if(data.status === 200){
+                fetch("/api/updated-image-urls", {
+                    method: "POST",
+                    headers:{
+                        Accept: "application/json",
+                        "Content-Type":"application/json"
+                    },
+                    body: JSON.stringify({
+                        id:albumId,
+                        url:data.data.url
+                    })
+                })
+            }      
         })
     };
 

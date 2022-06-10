@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { UserContext } from "./Context/UserContext";
 
 
@@ -30,10 +30,13 @@ const AlbumGrid = () =>{
 export default AlbumGrid;
 
 const Wrapper=styled.div`
-    width:400px;
+    width:1000px;
+    flex-wrap: wrap;
     display: flex;
-    flex-direction: row;
     margin: 20px;
+    align-items: space-between;
+    justify-content: center;
+    text-align: center;
 `
 
 const AlbumInfo =styled.div`
