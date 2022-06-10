@@ -28,6 +28,7 @@ const Wrapper=styled.div`
 
 `
 const MainHome = styled.div`
+    width:500px;
     display: flex;
     justify-content: center;
     align-content: center;

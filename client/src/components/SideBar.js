@@ -9,11 +9,11 @@ const SideBar =()=>{
             <SideBarItems>
                 <h2>About Site</h2>
                 <img src={about} />
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna</p>
+                <p>Cabinet making, also spelled cabinetmaking or "cabinet-making" with a hyphen, is the use of fine woodworking skills to make cabinets and furniture. <br/>Cabinetmaker made furniture like cabinets, chairs, doors, drawers, cupboards, bed frames, tables, and more.</p>
             </SideBarItems>
             
             <SideBarItems>
-                <h3>*Suggest Shops</h3>
+                <h2>Suggest Shops</h2>
             </SideBarItems>
         </Wrapper>
     )
@@ -24,28 +24,35 @@ export default SideBar;
 const Wrapper=styled.div`
     background-color: #f2f2f2;
     height: 95vh;
-    flex: 3;
-    /* margin: 20px; */
     display: flex;
     flex-direction: column;
     align-items: center;
-
 `
 
 const SideBarItems=styled.div`
-    margin-top: 20px;
+    margin-top: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
 
-h2{
-    border-bottom: 1px solid #464543;
-    padding: 5px;
-    margin-bottom: 10px;
-}
-
 img{
     width:100px;
 }
+
+h2{
+    border-bottom: 1px solid #8C8A87;
+    padding: 10px;
+    margin-bottom: 25px;
+    color: #8C8A87;
+}
+
+p{
+    margin-top: 10px;
+    padding: 20px;
+    line-height: 1.2;
+    color: #8C8A87;
+}
+
+
 `

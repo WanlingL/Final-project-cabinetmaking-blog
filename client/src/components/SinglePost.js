@@ -19,7 +19,7 @@ const SinglePost = () => {
     fetch(`/api/get-blog-post/${postId}`)
       .then((response) => response.json())
       .then((data) => {
-        // console.log("data.data",data.data)
+        // console.log("SingolePost data",data.data)
         setSinglePost(data.data);
       })
       .catch((error) => {
@@ -33,7 +33,7 @@ const SinglePost = () => {
     fetch(`/api/get-comments?post=${postId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("data.data",data.data)
+        // console.log("comment data",data.data)
         setPostComments(data.data);
       })
       .catch((error) => {
@@ -78,6 +78,8 @@ const SinglePost = () => {
       <>
         <Content>
           <h2>{singlePost.title}</h2>
+          <h4>Published at {singlePost.datePosted}</h4>
+          <h4>By {singlePost.name}</h4>
           <p>{singlePost.content}</p>
         </Content>    
 
@@ -88,7 +90,8 @@ const SinglePost = () => {
         </UpdateButton>
       </>
       }
-      
+      <Divider />
+
 
       <form onSubmit={commentSubmitHandler}>
         <input onChange= {(e)=>{setName(e.target.value)}} type="text"
@@ -106,17 +109,18 @@ const SinglePost = () => {
       </form>
       {success && <SuccessMessage>Comment Created</SuccessMessage> }
 
+      
       {/* render is probably trying to map before it is an array. what is this??How it work?? */}
-      {postComments && Array.isArray(postComments) && postComments.map((postComment,key)=>{
+      {postComments && Array.isArray(postComments) && postComments.map((postComment,index)=>{
         return(
-          <Comments key={postComment.time}>
+          <Comments key={index}>
             <p>{postComment.name}</p>
             <p>{postComment.time}</p>
             <p>{postComment.text}</p>
           </Comments>
         )
       })}
-      
+
     </Wrapper>
   );
 };
@@ -164,7 +168,17 @@ button{
 }
 
 `;
+
+const Divider = styled.div`
+    height: 1px;
+    background: rgb(230, 236, 240);
+    width: 800px;
+    margin: 50px 0px 0px 0px;
+`;
+
 const Content = styled.div`
+  width:800px;
+
   h2{
     font-size: 20px;
   }

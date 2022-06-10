@@ -31,9 +31,11 @@ const PostGrid =()=>{
 export default PostGrid;
 
 const Wrapper=styled.div`
+width:400px;
 display: flex;
 flex-direction: row;
 margin: 20px;
+
 
 /* img{
     height: 285px;
@@ -42,10 +44,21 @@ margin: 20px;
 } */
 `
 const PostInfo=styled.div`
-    width:400px;
+   
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 30px;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 5px;
+    height: 200px;
+    width:300px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
+
+:hover {
+    transform: scale(1.03);
+  }
 
 p{
     margin-top: 10px;

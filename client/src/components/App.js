@@ -70,8 +70,10 @@ const PageLocation = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
 `;
 
 const SideBarLocation = styled.div`
   width: 300px;
+
 `;

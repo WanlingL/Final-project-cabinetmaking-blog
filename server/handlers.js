@@ -264,6 +264,9 @@ const  getAllAlbums = async (request, response) =>{
 
 //update album-------------------------------------------------
 
+
+
+
 //add images to cloudinary-------------------------------------
 const uploadImage = async( request, response) =>{
   // const client = new MongoClient(MONGO_URI, options);
@@ -278,9 +281,13 @@ const uploadImage = async( request, response) =>{
     })
     console.log("uploadResponse",uploadResponse);
 
+
+
+    
+
     //going to mongodb?
     // await db.collection("albums").insertOne(request.body);
-
+   
     response.status(200).json({
       status: 200,
       message:"new image added"
@@ -304,13 +311,13 @@ const getAllimages = async (request, response) =>{
     .max_results(30)
     .execute();
 
-    const publicIds = resources.map((file) => file.public_id);
+    const publicIds = resources.map((file) => file.url);
       response.status(200).json({
         stauts:200,
         data: publicIds,
         message: "images found"
     })
-
+    // console.log("publicIds",publicIds)
   }catch(err){
       response.status(400).json({
         stauts: 400,

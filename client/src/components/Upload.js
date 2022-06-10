@@ -16,7 +16,7 @@ const Upload =()=>{
         const reader = new FileReader();
             console.log("reader", reader)
         reader.readAsDataURL(file);//convert image to URL
-        reader.onloadend = () =>{
+        reader.onloadend = () =>{//eventlistener
             setPreviewSource(reader.result);
             // console.log("reader.result",reader.result)
         }
@@ -66,7 +66,6 @@ const Upload =()=>{
                     alt="selected file" 
                     style={{height:"100px"}}/>
             )}
-
         </Wrapper>
     )
 };

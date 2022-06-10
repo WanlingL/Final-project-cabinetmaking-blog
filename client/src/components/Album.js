@@ -1,11 +1,12 @@
-import { useEffect, useState } from "react";
+import React, { Component, useEffect, useState } from "react";
 import styled from "styled-components";
 import CreateNewAlbum from "./CreateNewAlbum";
 import Upload from "./Upload";
 import { Image } from 'cloudinary-react';
 
+
 const Album =()=>{
-    const [imageIds, setImageIds]= useState([]); 
+    const [imageIds, setImageIds]= useState(null); 
     
 
     //call images
@@ -14,28 +15,30 @@ const Album =()=>{
         .then((response)=> response.json())
         .then((data)=>{
             setImageIds(data.data)
-            console.log("Album: get image data.data",data.data)
+            console.log("Album: get image data",data.data)
         })
         .catch((error)=>{
             console.log("Album:get image error", error);
         });
     }, []);
 
-
     return(
         <Wrapper>
             Album
             <CreateNewAlbum />
             <Upload />
-                {imageIds && imageIds.map((imageId, index)=>{
-                    <Image
-                        key={index}
-                        cloudName="wanling"
-                        publicId={imageId}
-                        width="300"
-                        crop="scale"
-                    />
-            })}
+             
+                {imageIds && imageIds.map((imageId, index)=>{ 
+                    return(
+                        <Image 
+                            key={index}
+                            cloudName="wanling"
+                            publicId={imageId}
+                            width="300"
+                            crop="scale"
+                        />
+                    ) 
+                })}
         </Wrapper>
     )
 };

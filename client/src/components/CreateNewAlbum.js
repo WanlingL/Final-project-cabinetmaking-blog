@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from 'uuid';
 import moment from "moment";
+import { UserContext } from "./Context/UserContext";
 
 const CreateNewAlbum =()=>{
     const [inputAlbumTitle, setInputAlbumTitle] = useState("")
     const [success, setSuccess]=useState(false);
+
+    const {userInfo, setUserInfo} = useContext(UserContext);
 
     const CreateAlbumHandler=(e)=>{
         e.preventDefault();
@@ -18,6 +21,7 @@ const CreateNewAlbum =()=>{
             },
             body:JSON.stringify({
                 id:uuidv4(),
+                email: userInfo.email,
                 datePosted: moment().format("DD-MM-YYYY, hh:mm:ss a"),
                 title:inputAlbumTitle
             }),

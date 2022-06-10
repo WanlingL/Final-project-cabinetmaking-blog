@@ -1,15 +1,17 @@
 import styled from "styled-components";
 import { FiPlusCircle } from "react-icons/fi";
 import tree from "../assets/tree.jpg";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import moment from "moment";
+import { UserContext } from "./Context/UserContext";
 
 
 const CreateNewPost =()=>{
     const[inputTitle, setinputTitle] =useState ("");
     const[inputContent, setInputContent] =useState("");
     const[success,setSuccess]=useState(false);
+    const {userInfo, setUserInfo} = useContext(UserContext);
 
     const postSubmitHandler=(e)=>{
         e.preventDefault();
@@ -22,6 +24,8 @@ const CreateNewPost =()=>{
             },
             body:JSON.stringify({
                 id:uuidv4(),
+                user: userInfo.data.given_name,
+                email: userInfo.data.email,
                 datePosted: moment().format("DD-MM-YYYY, hh:mm:ss a"),
                 imgUrl:"null",
                 title:inputTitle,

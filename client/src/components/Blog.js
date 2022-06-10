@@ -13,8 +13,10 @@ const Blog = () => {
 export default Blog;
 
 const Wrapper = styled.div`
+  width:500px;
   display: flex;
-  flex-direction: row;
-  justify-content: center;
+  flex-direction: column;
   align-content: center;
+  align-items: center;
+
 `;
