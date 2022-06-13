@@ -47,6 +47,7 @@ const UpdatePost = ({title, content, updateMode})=>{
     return(
         <Wrapper >
             <InputGroup>
+                <h2>Updated Post</h2>
                 <input value ={editedTitle} onChange={(e)=>{setEditedTitle(e.target.value)}} />
                 <textarea value ={editedContent} onChange={(e)=>{setEditedContent(e.target.value)}} />
             </InputGroup>
@@ -70,20 +71,32 @@ const Wrapper = styled.div`
     margin-left: 50px;
 
 
-`
+`;
+
 const InputGroup = styled.div`
     display: flex;
     flex-direction: column;
     width: 70vw;
+
+    h2{
+      color:#464543;
+      font-size: 20px;
+    }
     
 textarea{
     padding: 10px;
     width:70vw;
     height: 200px;
 }
-`
+`;
 
 const ButtonGroup= styled.div`
-
-`
-const SuccessMessage = styled.div``;
+  
+  button{
+    margin-right: 15px;
+  }
+`;
+const SuccessMessage = styled.div`
+  margin-top: 10px;
+  color:#C89B7D;
+`;

@@ -1,42 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import CreateNewAlbum from "./CreateNewAlbum";
-
-import { Image } from 'cloudinary-react';
 import AlbumGrid from "./AlbumGrid";
+import { UserContext } from "./Context/UserContext";
 
 
 const Album =()=>{
-    // const [imageIds, setImageIds]= useState(null); 
 
-    // //call images
-    // useEffect(() => {
-    //     fetch("/api/images")
-    //     .then((response)=> response.json())
-    //     .then((data)=>{
-    //         setImageIds(data.data)
-    //         console.log("Album: get image data",data.data)
-    //     })
-    //     .catch((error)=>{
-    //         console.log("Album:get image error", error);
-    //     });
-    // }, []);
+    const { userInfo, setUserInfo } = useContext(UserContext);
 
     return(
         <Wrapper>
-            <CreateNewAlbum />
+            {userInfo &&
+                <CreateNewAlbum />
+            }
             <AlbumGrid />            
-                {/* {imageIds && imageIds.map((imageId, index)=>{ 
-                    return(
-                        <Image 
-                            key={index}
-                            cloudName="wanling"
-                            publicId={imageId}
-                            width="300"
-                            crop="scale"
-                        />
-                    ) 
-                })} */}
         </Wrapper>
     )
 };

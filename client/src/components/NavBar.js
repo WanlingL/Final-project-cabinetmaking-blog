@@ -1,11 +1,21 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useContext } from "react";
 import { LoginButton, LogoutButton, Profile } from "../utility";
+import { useContext } from "react";
+import { UserContext } from "./Context/UserContext";
+
+
 
 const NavBar = () => {
-  const { isLoading, user } = useAuth0();
+  const { isLoading, user, isAuthenticated } = useAuth0();
+  const { userInfo, setUserInfo } = useContext(UserContext);
+  // if(isAuthenticated){
+
+  //   console.log("user.email", user.email)
+  //   //create post
+  //   //
+  // }
 
   return (
     <Wrapper>
@@ -29,18 +39,26 @@ const NavBar = () => {
         </NavButton>
 
         <NavButton>
-          <li>
-            <Link to="/create-new-post">Create Post</Link>
-          </li>
+          {userInfo &&
+            <li>
+              <Link to="/create-new-post">Create Post</Link>
+            </li>
+          }
         </NavButton>
 
         <NavButton>
           <li>
-            <LogButtons>
+            <AuthButtons>
+              {userInfo && 
+                <Greeting>
+                  <p>Hello </p>
+                  <p><Profile /></p>
+                </Greeting>
+              }
+
                 <LoginButton type="submit" />
-                <LogoutButton type="submit" />
-                <p><Profile /></p>
-            </LogButtons>
+                <LogoutButton type="submit" />  
+            </AuthButtons>
             
           </li>
         </NavButton>
@@ -53,17 +71,24 @@ export default NavBar;
 
 const Wrapper = styled.div`
   background-color: #ded5ca;
-  height: 40px;
+  height: 45px;
+  position: relative;
 
   ul {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    /* justify-content: center; */
+    margin-left: 100px;
   }
 
   a {
     text-decoration: none;
-    color: #464543;
+    color: #6F675C;
+    font-size: 18px;
+  
+    :hover {
+      color: #C89B7D;
+    } 
   }
 `;
 const NavButton = styled.div`
@@ -73,11 +98,21 @@ const NavButton = styled.div`
   cursor: pointer;
 `;
 
-const LogButtons = styled.div`
+const AuthButtons = styled.div`
     display: flex;
     flex-direction: row;
-    
-p{
-    margin-left: 10px;
-}
+    position: absolute;
+    right:100px;
+    top:8px;
+`
+const Greeting = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  p{
+    margin-right: 5px;
+    font-size: 18px;
+    color: #6F675C;
+  }
 `

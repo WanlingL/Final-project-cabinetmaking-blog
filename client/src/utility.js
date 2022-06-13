@@ -9,7 +9,19 @@ export const LoginButton = () => {
   return (
     !isAuthenticated && (
       <button 
-        onClick={() => loginWithRedirect()}>
+        onClick={() => loginWithRedirect()}
+        style={{
+          marginLeft:"20px", 
+          borderStyle:"none", 
+          borderRadius: "3px",
+          backgroundColor:"#464543",
+          padding:"4px 13px",
+          color:"#F7E8D8",
+          fontSize:"18px",
+          cursor: "pointer",
+          // "&:hover":{backgroundColor: "#C89B7D"}
+        }}
+      >
           Log In
       </button>
     )
@@ -23,7 +35,19 @@ export const LogoutButton = () => {
   return (
     isAuthenticated && (
       <button 
-        onClick={() => logout({ returnTo: window.location.origin })}>
+        onClick={() => logout({ returnTo: window.location.origin })}
+        style={{
+          marginLeft:"20px", 
+          borderStyle:"none", 
+          borderRadius: "3px",
+          backgroundColor:"#F7E8D8",
+          padding:"4px 13px",
+          color:"#6F675C",
+          fontSize:"18px",
+          cursor: "pointer",
+          ':hover':{color: "#C89B7D"} ,
+        }}
+      >
           Log Out
       </button>
     )  

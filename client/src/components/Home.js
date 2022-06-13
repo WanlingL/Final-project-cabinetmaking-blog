@@ -7,7 +7,7 @@ const Home =()=>{
     return(
         <Wrapper>
 
-                <Header />
+            <Header />
 
             <MainHome>
                 <Blog />

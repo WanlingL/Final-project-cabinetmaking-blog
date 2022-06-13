@@ -13,7 +13,6 @@ export const UserProvider = ({ children }) => {
   const [albums, setAlbums] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  // const {id} = useParams();
 
   //get user-----------------------------------------
   useEffect(() => {

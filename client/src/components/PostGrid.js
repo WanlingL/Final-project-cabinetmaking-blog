@@ -36,11 +36,17 @@ flex-direction: row;
 margin: 20px;
 
 
-/* img{
-    height: 285px;
-    width: 100%;
-    object-fit: cover;
-} */
+a {
+    text-decoration: none;
+    color: #6F675C;
+}
+h2{
+    font-size: 20px;
+}
+
+p{
+    font-size: 12px;
+}
 `
 const PostInfo=styled.div`
    

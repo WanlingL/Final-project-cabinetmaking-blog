@@ -341,7 +341,7 @@ const uploadImage = async( request, response) =>{
     await client.connect();
     const db = client.db("final_blog");
 
-    await db.collection("uploadImages").insertOne({...uploadResponse , albumName: id});
+    await db.collection("uploadImages").insertOne({...uploadResponse , albumId: id});
     //image[{"url":_________}] 
     //id of album
     //findOne
@@ -349,7 +349,7 @@ const uploadImage = async( request, response) =>{
     response.status(200).json({
       status: 200,
       message:"new image added",
-      data:{...uploadResponse , albumName: id}
+      data:{...uploadResponse , albumId: id}
     })
 
   }catch(err){
@@ -386,7 +386,6 @@ const getAllimages = async (request, response) =>{
 };
 
 //updated images url-------------------------------------------
-
 const updatedImageUrls = async(request, response) =>{
   const client = new MongoClient(MONGO_URI, options);
 

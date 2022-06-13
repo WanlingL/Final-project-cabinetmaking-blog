@@ -1,8 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import styled from "styled-components";
 import { useAuth0 } from "@auth0/auth0-react";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import { UserContext } from "./Context/UserContext";
 
 //Links
@@ -15,20 +14,21 @@ import CreateNewPost from "./CreateNewPost";
 import SinglePost from "./SinglePost";
 import SideBar from "./SideBar";
 import SingleAlbum from "./SingleAlbum";
+import CreateNewAlbum from "./CreateNewAlbum";
+import Upload from "./Upload";
 
 const App = () => {
   const { isLoading, user } = useAuth0();
   const { posts, setPosts } = useContext(UserContext);
-  const {albums, setAlbums} = useContext(UserContext);
-  const { isLoaded, setIsLoaded } = useContext(UserContext);
+  const { albums, setAlbums } = useContext(UserContext);
 
-  // Get all post-----------------------------------------
+
+  // Get all posts-----------------------------------------
   useEffect(() => {
     fetch("/api/get-blog-posts")
       .then((response) => response.json())
       .then((data) => {
         setPosts(data.data);
-        setIsLoaded(true);
         // console.log("/api/get-blog-posts data data",data.data)
       })
       .catch((error) => {
@@ -37,13 +37,12 @@ const App = () => {
   }, []);
 
 
-   // Get all album-----------------------------------------
+   // Get all albums-----------------------------------------
    useEffect(() => {
     fetch("/api/get-albums")
       .then((response) => response.json())
       .then((data) => {
         setAlbums(data.data);
-        setIsLoaded(true);
         // console.log("/api/get-blog-posts data data",data.data)
       })
       .catch((error) => {
@@ -51,9 +50,6 @@ const App = () => {
       });
   }, []);
 
-  // if (isLoading) {
-  //     return <div><CircularProgress /></div>;
-  //   }
 
   return (
     <Wrapper>
@@ -64,10 +60,16 @@ const App = () => {
         <PageLocation>
           <Routes>
             <Route path="/" element={<Home />} />
+
+            
+
             <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:postId" element={<SinglePost />} />
             <Route path="/create-new-post" element={<CreateNewPost />} />
+            <Route path="/blog/:postId" element={<SinglePost />} />
+            
             <Route path="/album" element={<Album />} />
+            <Route path="/add-album" element={<CreateNewAlbum />} />
+            <Route path="/upload" element={<Upload />} />
             <Route path="/album/:albumId" element={<SingleAlbum />} />
           </Routes>
 

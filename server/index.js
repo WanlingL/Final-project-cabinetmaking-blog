@@ -64,9 +64,9 @@ express()
 
     // .patch("/api/edit-album", updateAlbum)
 
-    .post("/api/upload", uploadImage)
+    .get("/api/images", getAllimages)//do I need this?
 
-    .get("/api/images", getAllimages)
+    .post("/api/upload", uploadImage)
 
     .post("/api/signin/:id", getSigninUser)  
 

@@ -5,13 +5,24 @@ import { useState, useContext } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import moment from "moment";
 import { UserContext } from "./Context/UserContext";
+import Upload from "./Upload";
 
 
 const CreateNewPost =()=>{
     const[inputTitle, setinputTitle] =useState ("");
     const[inputContent, setInputContent] =useState("");
     const[success,setSuccess]=useState(false);
-    const {userInfo, setUserInfo} = useContext(UserContext);
+    const [displayWarning, setDisplayWarning] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    // const {userInfo, setUserInfo} = useContext(UserContext);
+
+    //disable 0 input
+    let disabled= false;
+    if(inputTitle.length ===0 || inputContent.length===0){
+        disabled = true;
+        // setDisplayWarning(true)
+        // setErrorMessage("Looks like you missing something")
+    }
 
     const postSubmitHandler=(e)=>{
         e.preventDefault();
@@ -24,8 +35,8 @@ const CreateNewPost =()=>{
             },
             body:JSON.stringify({
                 id:uuidv4(),
-                user: userInfo.data.given_name,
-                email: userInfo.data.email,
+                // user: userInfo.data.given_name,
+                // email: userInfo.data.email,
                 datePosted: moment().format("DD-MM-YYYY, hh:mm:ss a"),
                 imgUrl:"null",
                 title:inputTitle,
@@ -44,7 +55,9 @@ const CreateNewPost =()=>{
 
     return(
         <Wrapper>
-            <img src={tree} />        
+            <img src={tree} />
+            {/* <Upload />         */}
+
             <form onSubmit={postSubmitHandler}>                           
                 <InputGroup>
                     <input onChange={(e)=>{setinputTitle(e.target.value)}}
@@ -57,8 +70,8 @@ const CreateNewPost =()=>{
                         type = "text"
                         placeholder="Start writting here..."></textarea>
                 </TextArea>
-
-                <button>Submit</button>
+                {/* {displayWarning && <P>*Warning: {errorMessage}</P>} */}
+                <button disabled={disabled}>Submit</button>
             </form>
             {success && <SuccessMessage>Post Created</SuccessMessage> }
         </Wrapper>
@@ -87,6 +100,11 @@ form{
     flex-direction: column;
 }
 
+input{
+    margin-top: 10px;
+    padding: 10px;
+}
+
 textarea{
     padding: 10px;
     width:70vw;
@@ -94,17 +112,21 @@ textarea{
 }
 
 button{
-    margin-top: 20px;
+   /* align-self: flex-end; */
+    border-radius: 5px;
+    margin-top: 15px;
     border: none;
     padding: 10px;
-    width: 150px;
+    width: 120px;
     font-size: 18px;
+    color: #6F675C;
     cursor: pointer;
 
     :hover {
       background-color: #C89B7D;
+      color:#f2f2f2;
     }
-}
+};
 `
 const InputGroup = styled.div`
     display: flex;
@@ -115,11 +137,15 @@ const InputGroup = styled.div`
 const TextArea = styled.div`
     margin-top: 20px;
     font-size: 15px;
-`
+`;
+
+const P = styled.p`
+  margin-top: 8px;
+  font-size: 12px;
+  color:red;
+`;
 
 const SuccessMessage = styled.div`
-    position: absolute;
-    top:50;
-    left: 50;
-    transform: translate(-50%,50%);
-`
+    margin-top: 10px;
+    color:#C89B7D;
+`;

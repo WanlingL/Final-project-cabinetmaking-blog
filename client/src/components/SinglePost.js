@@ -14,6 +14,11 @@ const SinglePost = () => {
   const [success, setSuccess] = useState(false);
   const [updatedMode, setUpdateMode] = useState(false)
 
+  let disabled= false;
+  if(name.length===0 || comment ===0){
+    disabled = true;
+  }
+
   //calling post content
   useEffect(() => {
     fetch(`/api/get-blog-post/${postId}`)
@@ -79,7 +84,6 @@ const SinglePost = () => {
         <Content>
           <h2>{singlePost.title}</h2>
           <h4>Published at {singlePost.datePosted}</h4>
-          <h4>By {singlePost.name}</h4>
           <p>{singlePost.content}</p>
         </Content>    
 
@@ -92,35 +96,36 @@ const SinglePost = () => {
       }
       <Divider />
 
+      <Container>
+        <h2>Leave your comments:</h2>
+        <form onSubmit={commentSubmitHandler}>
+          <input onChange= {(e)=>{setName(e.target.value)}} type="text"
+          placeholder="Your Name" />
 
-      <form onSubmit={commentSubmitHandler}>
-        <input onChange= {(e)=>{setName(e.target.value)}} type="text"
-        placeholder="Your Name" />
+            <textarea
+              onChange={(e) => {setComment(e.target.value);}}
+              type="text"
+              placeholder="Start writting your comment here..."
+            ></textarea>
+          
+          <button disabled={disabled}>Submit</button>
+        </form>
+        {success && <SuccessMessage>Comment Created</SuccessMessage> }
 
-        <TextArea>
-          <textarea
-            onChange={(e) => {setComment(e.target.value);}}
-            type="text"
-            placeholder="Start writting your comment here..."
-          ></textarea>
-        </TextArea>
-
-        <button>Submit</button>
-      </form>
-      {success && <SuccessMessage>Comment Created</SuccessMessage> }
-
-      
-      {/* render is probably trying to map before it is an array. what is this??How it work?? */}
-      {postComments && Array.isArray(postComments) && postComments.map((postComment,index)=>{
-        return(
-          <Comments key={index}>
-            <p>{postComment.name}</p>
-            <p>{postComment.time}</p>
-            <p>{postComment.text}</p>
-          </Comments>
-        )
-      })}
-
+        
+        {/* render is probably trying to map before it is an array. what is this??How it work?? */}
+        {postComments && Array.isArray(postComments) && postComments.map((postComment,index)=>{
+          return(
+            
+            <Comments key={index}>
+              <h3>Comments:</h3>
+              <h2>{postComment.name}</h2>
+              <h4>{postComment.time}</h4>
+              <p>{postComment.text}</p>
+            </Comments>
+          )
+        })}
+      </Container>
     </Wrapper>
   );
 };
@@ -142,9 +147,8 @@ form{
 }
 
 input{
-  /* width:200px; */
   padding: 4px 10px;
-  margin-top: 50px;
+  margin-top: 15px;
 }
 
 textarea{
@@ -155,18 +159,42 @@ textarea{
 }
 
 button{
+    border-radius: 5px;
     margin-top: 10px;
     border: none;
     padding: 8px;
     width: 100px;
     font-size: 15px;
+    color: #6F675C;
     cursor: pointer;
 
     :hover {
       background-color: #C89B7D;
+      color:#f2f2f2;
     }
 }
 
+`;
+
+
+const Content = styled.div`
+  width:800px;
+  color: #6F675C;
+
+  h2{
+    color:#464543;
+    font-size: 20px;
+  }
+
+  h4{
+    font-size: 12px;
+    margin-top: 5px;
+  }
+  
+  p{
+    margin-top: 20px;
+    line-height: 1.3;
+  }
 `;
 
 const Divider = styled.div`
@@ -176,23 +204,46 @@ const Divider = styled.div`
     margin: 50px 0px 0px 0px;
 `;
 
-const Content = styled.div`
-  width:800px;
+const UpdateButton = styled.div`
+
+`;
+const Container = styled.div`
+  color: #6F675C; 
 
   h2{
-    font-size: 20px;
-  }
-  
-  p{
-    margin-top: 20px;
+    margin-top: 50px;
   }
 `;
-const UpdateButton = styled.div`
-    /* justify-content: left;
-    align-content: left;
-    align-items: left; */
-`;
-const TextArea = styled.div``;
-const SuccessMessage = styled.div``;
 
-const Comments = styled.div``;
+const SuccessMessage = styled.div`
+  margin-top: 10px;
+  color:#C89B7D;
+`;
+
+const Comments = styled.div`
+  color: #6F675C;
+  margin-top: 30px;
+
+h3{
+  color:#464543;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+h2{
+  margin-top: 10px;
+  font-size: 15px;
+}
+
+h4{
+    font-size: 10px;
+    margin-top: 5px;
+    border-bottom: 1px solid #DED5CA;
+    padding-bottom: 3px;
+  }
+
+p{
+  padding-top: 15px;
+  font-size: 15px;
+}
+`;

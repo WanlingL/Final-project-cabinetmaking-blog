@@ -1,17 +1,15 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Upload from "./Upload";
-import { UserContext } from "./Context/UserContext";
 import { Image } from 'cloudinary-react';
+import { UserContext } from "./Context/UserContext";
 
 
 
 const SingleAlbum = () =>{
   const { albumId } = useParams();
   const [singleAlbum, setSingleAlbum] = useState([]);
-  const [imageIds, setImageIds]= useState(null); 
-  const {albums, setAlbums} = useContext(UserContext);
 
   //calling album 
   useEffect(() => {
