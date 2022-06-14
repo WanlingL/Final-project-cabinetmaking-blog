@@ -5,19 +5,22 @@ import Upload from "./Upload";
 import { Image } from 'cloudinary-react';
 import { UserContext } from "./Context/UserContext";
 
-
-
 const SingleAlbum = () =>{
   const { albumId } = useParams();
-  const [singleAlbum, setSingleAlbum] = useState([]);
+  const {userInfo, setUserInfo} = useContext(UserContext);
+  const {albums, setAlbums} = useContext(UserContext);
 
-  //calling album 
+  const [singleAlbumUrl, setSingleAlbumUrl] = useState([]);
+  const [deleteImage, setDeleteImage] = useState([])
+
+  //calling image(url) belong to album
   useEffect(() => {
     fetch(`/api/get-album/${albumId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("setSingleAlbum data",data.data.url)
-        setSingleAlbum(data.data.url);
+        console.log("setAlbums(data,data)", data.data)
+        setAlbums(data.data)
+        setSingleAlbumUrl(data.data.url);
       })
       .catch((error) => {
         console.log("setSingleAlbum", error);
@@ -25,16 +28,38 @@ const SingleAlbum = () =>{
   }, []);
 
 
+  // //updated image
+  // //handler function
+  //   fetch("" ,{
+  //     method:"DELETE",
+  //     headers:{
+  //       Accept: "application/json",
+  //       "Content-Type":"application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       id: albumId,
+  //       url: singleAlbumUrl,
+  //     }),
+  //   })
+  //   .then((response)=>response.json())
+  //   .then((data)=>{
+  //       console.log("delete image data", data)
+  //   })
+
 
     return(
         <Wrapper>
+          {userInfo &&
             <Upload />
-            <p>{singleAlbum.title}</p>
+          }
+            <p>{albums.title}</p>
 
-            {singleAlbum && Array.isArray(singleAlbum) && singleAlbum.map((url, index)=>{ 
+              {singleAlbumUrl && Array.isArray(singleAlbumUrl) && singleAlbumUrl.map((url, index)=>{ 
                     return(
+                      <ImageContainer key={index}>
+                       
                         <img src= {url} />
-
+                      </ImageContainer>
                         // <Image 
                         //     key={index}
                         //     cloudName="wanling"
@@ -59,3 +84,13 @@ const Wrapper=styled.div`
   margin-top: 50px;
   margin-left: 50px;
 `
+
+const ImageContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  
+  img{
+    height: 300px;
+  }
+`;

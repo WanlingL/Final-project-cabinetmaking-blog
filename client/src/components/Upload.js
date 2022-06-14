@@ -64,6 +64,7 @@ const Upload = () => {
             body: JSON.stringify({
               id: albumId,
               url: data.data.url,
+              // imageId: data.data.public_id,
             }),
           });
         } else{
@@ -74,33 +75,68 @@ const Upload = () => {
 
   return (
     <Wrapper>
-      <h1>Upload</h1>
-      {success && <SuccessMessage>Post Created</SuccessMessage> }
-      <form onSubmit={handleSubmitFile}>
-        <input
-          type="file"
-          name="image"
-          onChange={handleFileInputChange}
-          value={fileInput}
-        ></input>
-        <button type="submit">Submit</button>
-      </form>
-      {previewSource && (
-        <img
-          src={previewSource}
-          alt="selected file"
-          style={{ height: "100px" }}
-        />
-      )}
+      <h1>Upload images</h1>
+        {success && <SuccessMessage>Post Created</SuccessMessage> }
+        <form onSubmit={handleSubmitFile}>
+          <input
+            type="file"
+            name="image"
+            onChange={handleFileInputChange}
+            value={fileInput}
+          ></input>
+          <button type="submit">Submit</button>
+        </form>
+
+        {previewSource && (
+          <ImageContainer>
+            <img
+              src={previewSource}
+              alt="selected file"
+              style={{ height: "100px" }}
+            />
+          </ImageContainer>
+        )}
+        
     </Wrapper>
   );
 };
 
 export default Upload;
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  h1{
+    color:#464543;
+      font-size: 20px;
+  }
+
+ input{
+    width: 400px;
+    padding: 5px;
+}
+
+button{
+    border-radius: 5px;
+    margin-left: 20px;
+    border: none;
+    padding: 10px;
+    width: 100px;
+    font-size: 18px;
+    color: #6F675C;
+    cursor: pointer;
+
+    :hover {
+      background-color: #C89B7D;
+      color:#f2f2f2;
+    }
+};
+`;
+
+const ImageContainer = styled.div`
+  margin-top: 10px;
+  margin-bottom:20px;
+`;
 
 const SuccessMessage = styled.div`
   margin-top: 10px;
   color:#C89B7D;
-`
+`;

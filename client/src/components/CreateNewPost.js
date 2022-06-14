@@ -132,7 +132,7 @@ const InputGroup = styled.div`
     display: flex;
     flex-direction: column;
     width: 70vw;
-`
+`;
 
 const TextArea = styled.div`
     margin-top: 20px;

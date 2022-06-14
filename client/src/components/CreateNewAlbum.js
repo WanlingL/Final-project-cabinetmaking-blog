@@ -11,6 +11,11 @@ const CreateNewAlbum =()=>{
     const {userInfo, setUserInfo} = useContext(UserContext);
     const {albumId} = useParams();
 
+    let disabled= false;
+    if(inputAlbumTitle.length===0){
+        disabled = true;
+    }
+
     const CreateAlbumHandler=(e)=>{
         e.preventDefault();
 
@@ -46,7 +51,7 @@ const CreateNewAlbum =()=>{
                     placeholder="Album Title"
                 />
                 
-                <button>Create Album</button>
+                <button disabled={disabled}>Create Album</button>
             </Form>
             {success && <SuccessMessage>Album Created</SuccessMessage> }
         </Wrapper>
@@ -57,21 +62,25 @@ export default CreateNewAlbum;
 const Wrapper = styled.div`
     margin-top: 50px;
     margin-left: 50px;
-`
+    /* align-items: center;
+    align-content:center;
+    justify-content: center;
+    justify-items: center; */
+`;
 
 const Form=styled.form`
     display: flex;
     flex-direction: row;
 
+
     input{
     width: 400px;
-    padding: 3px 10px;
+    padding: 5px;
 }
 
     button{
-   /* align-self: flex-end; */
     border-radius: 5px;
-    margin-top: 15px;
+    margin-left: 20px;
     border: none;
     padding: 10px;
     width: 200px;
@@ -83,9 +92,9 @@ const Form=styled.form`
       background-color: #C89B7D;
       color:#f2f2f2;
     }
-}
+};
 `
 const SuccessMessage = styled.div`
     margin-top: 10px;
     color:#C89B7D;
-`
+`;

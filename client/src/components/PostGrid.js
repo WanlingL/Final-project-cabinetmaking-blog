@@ -15,7 +15,6 @@ const PostGrid =()=>{
             return(
                 <Link to={`/blog/${post.id}`}>
                     <PostInfo key={index}>
-                        <img src={post.imgUrl}/>
                         <h2>{post.title}</h2>
                         <p>{post.datePosted}</p>
                     </PostInfo>
@@ -54,12 +53,13 @@ const PostInfo=styled.div`
     margin: 20px;
     padding: 20px;
     border-radius: 5px;
-    height: 200px;
+    height: 150px;
     width:300px;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    justify-content: center;
 
 :hover {
     transform: scale(1.03);

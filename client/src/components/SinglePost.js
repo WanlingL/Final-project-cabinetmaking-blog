@@ -1,11 +1,13 @@
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import UpdatePost from "./UpdatePost";
+import { UserContext } from "./Context/UserContext";
 
 const SinglePost = () => {
   const { postId } = useParams();
+  const {userInfo, setUserInfo} = useContext(UserContext);
 
   const [singlePost, setSinglePost] = useState({});
   const [postComments, setPostComments] = useState({})
@@ -87,44 +89,49 @@ const SinglePost = () => {
           <p>{singlePost.content}</p>
         </Content>    
 
-        <UpdateButton>
-          <button onClick={()=> setUpdateMode(true)}>
-          Edit
-        </button>
-        </UpdateButton>
+        {userInfo &&
+          <UpdateButton>
+            <button onClick={()=> setUpdateMode(true)}>
+            Edit
+          </button>
+          </UpdateButton>
+        }
       </>
       }
       <Divider />
 
       <Container>
-        <h2>Leave your comments:</h2>
-        <form onSubmit={commentSubmitHandler}>
-          <input onChange= {(e)=>{setName(e.target.value)}} type="text"
-          placeholder="Your Name" />
+        {!updatedMode && 
+          <>
+            <h2>Leave your comments:</h2>
+            <form onSubmit={commentSubmitHandler}>
+              <input onChange= {(e)=>{setName(e.target.value)}} type="text"
+              placeholder="Your Name" />
 
-            <textarea
-              onChange={(e) => {setComment(e.target.value);}}
-              type="text"
-              placeholder="Start writting your comment here..."
-            ></textarea>
-          
-          <button disabled={disabled}>Submit</button>
-        </form>
-        {success && <SuccessMessage>Comment Created</SuccessMessage> }
+                <textarea
+                  onChange={(e) => {setComment(e.target.value);}}
+                  type="text"
+                  placeholder="Start writting your comment here..."
+                ></textarea>
+              
+              <button disabled={disabled}>Submit</button>
+            </form>
+            {success && <SuccessMessage>Comment Created</SuccessMessage> }
 
-        
-        {/* render is probably trying to map before it is an array. what is this??How it work?? */}
-        {postComments && Array.isArray(postComments) && postComments.map((postComment,index)=>{
-          return(
-            
-            <Comments key={index}>
-              <h3>Comments:</h3>
-              <h2>{postComment.name}</h2>
-              <h4>{postComment.time}</h4>
-              <p>{postComment.text}</p>
-            </Comments>
-          )
-        })}
+            {/* render is probably trying to map before it is an array. what is this??How it work?? */}
+            {postComments && Array.isArray(postComments) && postComments.map((postComment,index)=>{
+              return(
+                
+                <Comments key={index}>
+                  <h3>Comments:</h3>
+                  <h2>{postComment.name}</h2>
+                  <h4>{postComment.time}</h4>
+                  <p>{postComment.text}</p>
+                </Comments>
+              )
+            })}
+          </>
+        }
       </Container>
     </Wrapper>
   );

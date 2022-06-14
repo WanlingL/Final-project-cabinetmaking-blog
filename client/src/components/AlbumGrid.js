@@ -15,9 +15,12 @@ const AlbumGrid = () =>{
             return(
                 
                 <Link to={`/album/${album.id}`}>
-                    <AlbumInfo>
+                    <AlbumInfo key={index}>
                         <img src= {album.url[0]}
-                            style={{ height: "100px" }}
+                            style={{ 
+                                height: "150px",
+                                marginTop:"10px" 
+                            }}
                          />
                         <h2>{album.title}</h2>
                     </AlbumInfo>
@@ -46,6 +49,7 @@ a {
 h2{
     margin-top: 10px;
     font-size: 20px;
+    padding-top:5px;
 }
 `
 
@@ -54,8 +58,8 @@ const AlbumInfo =styled.div`
     margin: 20px;
     padding: 20px;
     border-radius: 5px;
-    height: 150px;
-    width:200px;
+    height: 200px;
+    width:300px;
     display: flex;
     flex-direction: column;
     align-items: center;

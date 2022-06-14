@@ -220,7 +220,7 @@ const getPostComments = async (request, response) =>{
     });
 
     client.close();
-    console.log("getPostComments disconnected!");
+    // console.log("getPostComments disconnected!");
   }
   catch (err) {
     console.log(err.message);
@@ -326,6 +326,7 @@ const getSinglealbum = async (request, response) => {
 
 
 
+
 //add images to cloudinary-------------------------------------
 const uploadImage = async( request, response) =>{
   const client = new MongoClient(MONGO_URI, options);
@@ -376,7 +377,6 @@ const getAllimages = async (request, response) =>{
         data: publicIds,
         message: "images found"
     })
-    // console.log("publicIds",publicIds)
   }catch(err){
       response.status(400).json({
         stauts: 400,
@@ -385,7 +385,7 @@ const getAllimages = async (request, response) =>{
   }
 };
 
-//updated images url-------------------------------------------
+//updated(add) image url to album-------------------------------------------
 const updatedImageUrls = async(request, response) =>{
   const client = new MongoClient(MONGO_URI, options);
 
@@ -404,14 +404,47 @@ const updatedImageUrls = async(request, response) =>{
     response.status(200).json({
       status: 200,
       ...request.body,
-      message: "user added",
+      message: "image url updated",
     });
     
   }catch(err){
     console.log("error", error)
   }
-
 };
+
+//update images------------------------------------------------
+const updatedImage = async (request, response) =>{
+  const client = new MongoClient(MONGO_URI, options);
+
+  try{
+    await client.connect();
+    const db =client.db("final_blog");
+
+    //grab the album
+    const {id, url} = request.body;
+    const findAlbum = await db.collection("albums").findOne({id});
+    // console.log("findAlbum",findAlbum)
+
+    //get old url from album
+    const oldUrls = findAlbum.url
+
+    //filter item we dont want in the album, 如果不等於(!==)想刪除的item, 留下
+    const updatedUrl = oldUrls.filter(item =>item !== url)
+
+    const setUpdatedUrls = {$set:{url:updatedUrl}}
+    await db.collection("albums").updateOne({id}, setUpdatedUrls )
+
+      response.status(200).json({
+          status: 200,
+          message: "image updated"
+      })
+  
+    client.close();
+  }catch(err){
+    console.log(err.stack);
+  }
+};
+
 
 //Get user------------------------------------------------------
 const getSigninUser = async (request, response) => {
@@ -466,5 +499,6 @@ module.exports = {
   getSinglealbum,
   updatedImageUrls,
   uploadImage,
+  updatedImage,
   getAllimages,
 };

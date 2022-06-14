@@ -17,6 +17,7 @@ const {
     getSinglealbum,
     updatedImageUrls,
     uploadImage,
+    updatedImage,
     getAllimages
 } = require("./handlers");
 
@@ -36,12 +37,7 @@ express()
     .use(express.urlencoded({limit:"50mb", extended:true}))
 
 
-    // ---------------------------------
-    // .get("/", (request, response)=>{
-    //     response.send("Hello Hello 123456");
-    // })
-
-
+    //post======================================
     .get("/api/get-blog-posts", getAllPosts)
 
     .get("/api/get-blog-post/:id", getSinglePost)
@@ -50,24 +46,30 @@ express()
 
     .patch("/api/edit-post/:id", updatePost)
 
+    //comment==================================
     .post("/api/comment-on-post", addComment)
 
     .get("/api/get-comments", getPostComments)
 
+    //albums==================================
     .post("/api/add-album", addNewAlbum)
 
     .get("/api/get-albums", getAllAlbums)
 
     .get("/api/get-album/:id", getSinglealbum)
 
-    .post("/api/updated-image-urls", updatedImageUrls)
-
     // .patch("/api/edit-album", updateAlbum)
+
+    //images==================================
+    .post("/api/upload", uploadImage)
 
     .get("/api/images", getAllimages)//do I need this?
 
-    .post("/api/upload", uploadImage)
+    .post("/api/updated-image-urls", updatedImageUrls)
 
+    .patch("/api/updated-image", updatedImage)// remove image
+
+    //user====================================
     .post("/api/signin/:id", getSigninUser)  
 
     // ---------------------------------
