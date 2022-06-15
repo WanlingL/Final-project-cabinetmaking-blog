@@ -1,5 +1,5 @@
 # Final Project - Cabinetmaking Blog
-######Concordia full-stack web development bootcamp
+###### Concordia full-stack web development bootcamp
 ![This is an image](/client/src/assets/Cabinetmaking%20Blog_home%20page.png)
 Welcome to the Cabinetmaking Blog. In here, you can share posts or images with websitesite visitor.
 This project was using Auth0, React.js, Node.js, Express, MongoDB, and RESTful APIs.
