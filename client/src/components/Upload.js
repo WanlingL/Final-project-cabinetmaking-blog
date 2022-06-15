@@ -83,7 +83,7 @@ const Upload = () => {
   return (
     <Wrapper>
       <h1>Upload images</h1>
-        {success && <SuccessMessage>Post Created</SuccessMessage> }
+        {success && <SuccessMessage>Image Upload</SuccessMessage> }
         <form onSubmit={handleSubmitFile}>
           <input
             type="file"
