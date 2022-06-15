@@ -2,7 +2,7 @@
 **Concordia full-stack web development bootcamp**
 ![This is an Project Homepage](/client/src/assets/Cabinetmaking%20Blog_home%20page.png)
 Welcome to the Cabinetmaking Blog. In here, you can share posts or images with websitesite visitor.
-This project was using Auth0, React.js, Node.js, Express, MongoDB, and RESTful APIs.
+This project was using Auth0, Cloudinary, React.js, Node.js, Express, MongoDB, and RESTful APIs.
 
 ## Project Setup
 **The Frontend**
