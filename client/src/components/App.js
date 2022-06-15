@@ -90,6 +90,7 @@ const PageLocation = styled.div`
 
 const SideBarLocation = styled.div`
   width: 300px;
+  
 `;
 
 
