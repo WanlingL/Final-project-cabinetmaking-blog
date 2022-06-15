@@ -21,15 +21,12 @@ export default Home;
 
 const Wrapper=styled.div`
     width: 85vw;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center;
-    align-content: center; */
+    height: 100vh;
 
 `
 const MainHome = styled.div`
-    width:500px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-content: center;
 

@@ -4,14 +4,19 @@ import React, { useState, useEffect, useContext } from "react";
 import Upload from "./Upload";
 import { Image } from 'cloudinary-react';
 import { UserContext } from "./Context/UserContext";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const SingleAlbum = () =>{
   const { albumId } = useParams();
-  const {userInfo, setUserInfo} = useContext(UserContext);
-  const {albums, setAlbums} = useContext(UserContext);
+  const {isAuthenticated, user}=useAuth0()
+  console.log("user",user)
+  const {userInfo, setUserInfo, newUpload, setNewUpload} = useContext(UserContext);
 
   const [singleAlbumUrl, setSingleAlbumUrl] = useState([]);
-  const [deleteImage, setDeleteImage] = useState([])
+  const [singleAlbum, setSingleAlbum] = useState([]);
+  const [deleteImage, setDeleteImage] = useState(false);
+  
+  console.log("singleAlbumUrl", singleAlbumUrl)
 
   //calling image(url) belong to album
   useEffect(() => {
@@ -19,47 +24,56 @@ const SingleAlbum = () =>{
       .then((response) => response.json())
       .then((data) => {
         console.log("setAlbums(data,data)", data.data)
-        setAlbums(data.data)
+        setSingleAlbum(data.data)
         setSingleAlbumUrl(data.data.url);
       })
       .catch((error) => {
         console.log("setSingleAlbum", error);
       });
-  }, []);
+  }, [deleteImage, newUpload]);
 
 
-  // //updated image
-  // //handler function
-  //   fetch("" ,{
-  //     method:"DELETE",
-  //     headers:{
-  //       Accept: "application/json",
-  //       "Content-Type":"application/json"
-  //     },
-  //     body: JSON.stringify({
-  //       id: albumId,
-  //       url: singleAlbumUrl,
-  //     }),
-  //   })
-  //   .then((response)=>response.json())
-  //   .then((data)=>{
-  //       console.log("delete image data", data)
-  //   })
-
-
+  //deleat image handler function
+  const handleUpdatedImage = (url)=>{
+  
+    fetch("/api/updated-image" ,{
+      method:"PATCH",
+      headers:{
+        Accept: "application/json",
+        "Content-Type":"application/json"
+      },
+      body: JSON.stringify({
+        id: albumId,
+        url: url,
+      }),
+    })
+    .then((response)=>response.json())
+    .then((data)=>{
+        setDeleteImage(!deleteImage);
+        
+    });
+  };
+    
     return(
         <Wrapper>
           {userInfo &&
             <Upload />
           }
-            <p>{albums.title}</p>
-
+            <p>{singleAlbum.title}</p>
               {singleAlbumUrl && Array.isArray(singleAlbumUrl) && singleAlbumUrl.map((url, index)=>{ 
                     return(
                       <ImageContainer key={index}>
-                       
                         <img src= {url} />
+                        
+                        {/* //Admin setting
+                        {isAuthenticated && user.email === "wanlingliao628@gmail.com" && */}
+                        {isAuthenticated && user.email === "wanlingliao628@gmail.com" &&
+                        <DeleteButton>
+                          <button type="submit" onClick= {()=>{handleUpdatedImage(url)}}>Delete Image</button>
+                        </DeleteButton>}
+
                       </ImageContainer>
+
                         // <Image 
                         //     key={index}
                         //     cloudName="wanling"
@@ -69,6 +83,7 @@ const SingleAlbum = () =>{
                         // />
                     ) 
                 })}
+               
         </Wrapper>
     )
 };
@@ -93,4 +108,7 @@ const ImageContainer = styled.div`
   img{
     height: 300px;
   }
+`;
+
+const DeleteButton = styled.div`
 `;

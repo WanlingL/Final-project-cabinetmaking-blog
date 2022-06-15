@@ -29,11 +29,13 @@ const PostGrid =()=>{
 export default PostGrid;
 
 const Wrapper=styled.div`
-width:400px;
-display: flex;
-flex-direction: row;
-margin: 20px;
-
+    width:1400px;
+    display: flex;
+	flex-wrap: wrap;
+    margin: 20px;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
 
 a {
     text-decoration: none;
@@ -48,7 +50,6 @@ p{
 }
 `
 const PostInfo=styled.div`
-   
     box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 30px;
     margin: 20px;
     padding: 20px;

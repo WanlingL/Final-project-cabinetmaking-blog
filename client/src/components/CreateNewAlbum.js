@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 const CreateNewAlbum =()=>{
     const [inputAlbumTitle, setInputAlbumTitle] = useState("")
     const [success, setSuccess]=useState(false);
-    const {userInfo, setUserInfo} = useContext(UserContext);
+    const {newAlbum, setNewAlbum} = useContext(UserContext);
     const {albumId} = useParams();
 
     let disabled= false;
@@ -36,6 +36,7 @@ const CreateNewAlbum =()=>{
         .then((data)=>{
             if(data.status===200){
                 setSuccess(true)
+                setNewAlbum(!newAlbum)
             } else{
                 setSuccess(false)
             }

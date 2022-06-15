@@ -10,6 +10,8 @@ const Upload = () => {
   const [success,setSuccess]=useState(false);
   const { albumId } = useParams();
 
+  const {newUpload, setNewUpload} = useContext(UserContext);
+
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     previewFile(file);
@@ -55,6 +57,7 @@ const Upload = () => {
         //upload images to selected album
         if (data.status === 200) {
             setSuccess(true)
+            
           fetch("/api/updated-image-urls", {
             method: "POST",
             headers: {
@@ -66,7 +69,13 @@ const Upload = () => {
               url: data.data.url,
               // imageId: data.data.public_id,
             }),
-          });
+          })
+          .then((response) => response.json())
+          .then((data)=>{
+            if(data.status===200){
+              setNewUpload(!newUpload)
+            }
+          })
         } else{
             setSuccess(false)
         }

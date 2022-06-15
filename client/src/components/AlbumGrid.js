@@ -11,7 +11,7 @@ const AlbumGrid = () =>{
     return(
         <Wrapper>
 
-        {albums.map((album, index)=>{
+        { albums.map((album, index)=>{
             return(
                 
                 <Link to={`/album/${album.id}`}>
@@ -24,6 +24,7 @@ const AlbumGrid = () =>{
                          />
                         <h2>{album.title}</h2>
                     </AlbumInfo>
+                    
                 </Link>
             )
         })}
@@ -34,7 +35,7 @@ const AlbumGrid = () =>{
 export default AlbumGrid;
 
 const Wrapper=styled.div`
-    width:1000px;
+    width:1200px;
     flex-wrap: wrap;
     display: flex;
     margin: 20px;

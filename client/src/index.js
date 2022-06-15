@@ -17,6 +17,8 @@ root.render(
       domain={REACT_APP_AUTH0_DOMAIN}
       clientId={REACT_APP_AUTH0_CLIENT_ID}
       redirectUri={window.location.origin}
+      //not logout on refresh!
+      cacheLocation="localstorage"
       audience="https://dev-a9sdg3j7.us.auth0.com/api/v2/"
       scope="read:current_user update:current_user_metadata"
   >

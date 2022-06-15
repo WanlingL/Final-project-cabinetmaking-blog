@@ -362,28 +362,28 @@ const uploadImage = async( request, response) =>{
   }
 };
 
-//get all images from cloudinary--------------------------------
-const getAllimages = async (request, response) =>{
+// //get all images from cloudinary---------------------------not 
+// const getAllimages = async (request, response) =>{
 
-  try{
-    const {resources} = await cloudinary.search.expression('folder: final_project')
-    .sort_by('public_id','desc')
-    .max_results(30)
-    .execute();
+//   try{
+//     const {resources} = await cloudinary.search.expression('folder: final_project')
+//     .sort_by('public_id','desc')
+//     .max_results(30)
+//     .execute();
 
-    const publicIds = resources.map((file) => file.url);
-      response.status(200).json({
-        stauts:200,
-        data: publicIds,
-        message: "images found"
-    })
-  }catch(err){
-      response.status(400).json({
-        stauts: 400,
-        message: "something went wrong"
-      })
-  }
-};
+//     const publicIds = resources.map((file) => file.url);
+//       response.status(200).json({
+//         stauts:200,
+//         data: publicIds,
+//         message: "images found"
+//     })
+//   }catch(err){
+//       response.status(400).json({
+//         stauts: 400,
+//         message: "something went wrong"
+//       })
+//   }
+// };
 
 //updated(add) image url to album-------------------------------------------
 const updatedImageUrls = async(request, response) =>{
@@ -436,6 +436,7 @@ const updatedImage = async (request, response) =>{
 
       response.status(200).json({
           status: 200,
+          data:updatedUrl,
           message: "image updated"
       })
   
@@ -500,5 +501,5 @@ module.exports = {
   updatedImageUrls,
   uploadImage,
   updatedImage,
-  getAllimages,
+  // getAllimages,
 };

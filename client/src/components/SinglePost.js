@@ -15,6 +15,7 @@ const SinglePost = () => {
   const [comment, setComment] = useState("");
   const [success, setSuccess] = useState(false);
   const [updatedMode, setUpdateMode] = useState(false)
+  const [newComment, setNewComments] = useState(false);
 
   let disabled= false;
   if(name.length===0 || comment ===0){
@@ -46,12 +47,13 @@ const SinglePost = () => {
       .catch((error) => {
         console.log("post comment", error);
       });
-  }, []);
+  }, [newComment]);
 
 
   //submit comment
   const commentSubmitHandler = (e) => {
     e.preventDefault();
+    setNewComments(!newComment) //see the latest comment
     
       fetch("/api/comment-on-post", {
         method: "POST",
@@ -119,11 +121,12 @@ const SinglePost = () => {
             {success && <SuccessMessage>Comment Created</SuccessMessage> }
 
             {/* render is probably trying to map before it is an array. what is this??How it work?? */}
+            <h3>Comments:</h3>
             {postComments && Array.isArray(postComments) && postComments.map((postComment,index)=>{
               return(
                 
                 <Comments key={index}>
-                  <h3>Comments:</h3>
+                  
                   <h2>{postComment.name}</h2>
                   <h4>{postComment.time}</h4>
                   <p>{postComment.text}</p>
@@ -180,9 +183,7 @@ button{
       color:#f2f2f2;
     }
 }
-
 `;
-
 
 const Content = styled.div`
   width:800px;

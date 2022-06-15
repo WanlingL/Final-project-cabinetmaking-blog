@@ -18,7 +18,7 @@ const {
     updatedImageUrls,
     uploadImage,
     updatedImage,
-    getAllimages
+    // getAllimages
 } = require("./handlers");
 
 express()
@@ -32,10 +32,11 @@ express()
     // Any requests for static files will go into the public folder
     .use(express.static("public"))
 
-    //cloudinary
+    //for images 
     .use(express.json({limit:"50mb"})) // allow to parse higher limit pf megabite
-    .use(express.urlencoded({limit:"50mb", extended:true}))
+    .use(express.urlencoded({limit:"50mb", extended:true }))
 
+    //https://stackoverflow.com/questions/19917401/error-request-entity-too-large
 
     //post======================================
     .get("/api/get-blog-posts", getAllPosts)
@@ -63,7 +64,7 @@ express()
     //images==================================
     .post("/api/upload", uploadImage)
 
-    .get("/api/images", getAllimages)//do I need this?
+    // .get("/api/images", getAllimages)//do I need this?
 
     .post("/api/updated-image-urls", updatedImageUrls)
 

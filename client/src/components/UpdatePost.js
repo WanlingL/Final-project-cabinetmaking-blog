@@ -25,7 +25,7 @@ const UpdatePost = ({title, content, updateMode})=>{
           })
           .then((response) => response.json())
           .then((data) => {
-            console.log("data",data)
+            // console.log("data",data)// doesnt console??
             
             if (data.status === 200) {
               navigate(`/blog/${postId}`)

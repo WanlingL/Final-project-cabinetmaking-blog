@@ -10,6 +10,12 @@ export const UserProvider = ({ children }) => {
   const { user, isAuthenticated } = useAuth0();
 
   const [posts, setPosts] = useState([]);
+
+  //refresh the new post/delete in effect dependency in the singleAlbum(dummy state)
+  const [ newPost, setNewPost] = useState(false)
+  const [newUpload, setNewUpload] = useState(false);
+  const [newAlbum, setNewAlbum] = useState(false);
+
   const [albums, setAlbums] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -42,6 +48,7 @@ export const UserProvider = ({ children }) => {
     }
   }, [isAuthenticated]);
 
+
   return (
     <UserContext.Provider
       value={{
@@ -53,7 +60,12 @@ export const UserProvider = ({ children }) => {
         setAlbums,
         isLoaded,
         setIsLoaded,
-
+        newPost,
+        setNewPost,
+        newUpload,
+        setNewUpload,
+        newAlbum,
+        setNewAlbum
       }}
     >
       {children}

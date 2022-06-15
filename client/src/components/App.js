@@ -19,8 +19,7 @@ import Upload from "./Upload";
 
 const App = () => {
   const { isLoading, user } = useAuth0();
-  const { posts, setPosts } = useContext(UserContext);
-  const { albums, setAlbums } = useContext(UserContext);
+  const { posts, setPosts, albums, setAlbums, newPost, setNewPost, newAlbum, setNewAlbum } = useContext(UserContext);
 
 
   // Get all posts-----------------------------------------
@@ -34,7 +33,7 @@ const App = () => {
       .catch((error) => {
         console.log("/api/get-blog-posts error", error);
       });
-  }, []);
+  }, [newPost]);
 
 
    // Get all albums-----------------------------------------
@@ -48,7 +47,7 @@ const App = () => {
       .catch((error) => {
         console.log("/api/get-albums error", error);
       });
-  }, []);
+  }, [newAlbum]);
 
 
   return (
@@ -58,20 +57,17 @@ const App = () => {
         <NavBar />
 
         <PageLocation>
-          <Routes>
-            <Route path="/" element={<Home />} />
-
-            
-
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/create-new-post" element={<CreateNewPost />} />
-            <Route path="/blog/:postId" element={<SinglePost />} />
-            
-            <Route path="/album" element={<Album />} />
-            <Route path="/add-album" element={<CreateNewAlbum />} />
-            <Route path="/upload" element={<Upload />} />
-            <Route path="/album/:albumId" element={<SingleAlbum />} />
-          </Routes>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/create-new-post" element={<CreateNewPost />} />
+              <Route path="/blog/:postId" element={<SinglePost />} />
+              
+              <Route path="/album" element={<Album />} />
+              <Route path="/add-album" element={<CreateNewAlbum />} />
+              <Route path="/upload" element={<Upload />} />
+              <Route path="/album/:albumId" element={<SingleAlbum />} />
+            </Routes>
 
           <SideBarLocation>
             <SideBar />
@@ -90,10 +86,10 @@ const PageLocation = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-
 `;
 
 const SideBarLocation = styled.div`
   width: 300px;
-
 `;
+
+

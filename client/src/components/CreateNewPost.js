@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { FiPlusCircle } from "react-icons/fi";
 import tree from "../assets/tree.jpg";
 import { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import moment from "moment";
 import { UserContext } from "./Context/UserContext";
@@ -9,19 +10,18 @@ import Upload from "./Upload";
 
 
 const CreateNewPost =()=>{
+    const navigate = useNavigate();
     const[inputTitle, setinputTitle] =useState ("");
     const[inputContent, setInputContent] =useState("");
     const[success,setSuccess]=useState(false);
     const [displayWarning, setDisplayWarning] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
-    // const {userInfo, setUserInfo} = useContext(UserContext);
+    const {newPost, setNewPost} = useContext(UserContext);
 
     //disable 0 input
     let disabled= false;
     if(inputTitle.length ===0 || inputContent.length===0){
         disabled = true;
-        // setDisplayWarning(true)
-        // setErrorMessage("Looks like you missing something")
     }
 
     const postSubmitHandler=(e)=>{
@@ -37,8 +37,8 @@ const CreateNewPost =()=>{
                 id:uuidv4(),
                 // user: userInfo.data.given_name,
                 // email: userInfo.data.email,
+                // imgUrl:"null",
                 datePosted: moment().format("DD-MM-YYYY, hh:mm:ss a"),
-                imgUrl:"null",
                 title:inputTitle,
                 content:inputContent
             }),            
@@ -46,9 +46,13 @@ const CreateNewPost =()=>{
         .then((response)=>response.json())
         .then((data)=>{
             if(data.status===200){
+                // navigate("/blog")
                 setSuccess(true)
+                setNewPost(!newPost)
             } else{
                 setSuccess(false)
+                setDisplayWarning(true)
+                setErrorMessage("Looks like you missing something")
             }
         })
     };
@@ -70,7 +74,7 @@ const CreateNewPost =()=>{
                         type = "text"
                         placeholder="Start writting here..."></textarea>
                 </TextArea>
-                {/* {displayWarning && <P>*Warning: {errorMessage}</P>} */}
+                {displayWarning && <P>*Warning: {errorMessage}</P>}
                 <button disabled={disabled}>Submit</button>
             </form>
             {success && <SuccessMessage>Post Created</SuccessMessage> }
