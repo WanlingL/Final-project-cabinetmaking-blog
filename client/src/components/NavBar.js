@@ -1,21 +1,16 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
 import { LoginButton, LogoutButton, Profile } from "../utility";
 import { useContext } from "react";
 import { UserContext } from "./Context/UserContext";
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 
 const NavBar = () => {
   const { isLoading, user, isAuthenticated } = useAuth0();
   const { userInfo, setUserInfo } = useContext(UserContext);
-  // if(isAuthenticated){
 
-  //   console.log("user.email", user.email)
-  //   //create post
-  //   //
-  // }
 
   return (
     <Wrapper>
@@ -39,7 +34,7 @@ const NavBar = () => {
         </NavButton>
 
         <NavButton>
-          {userInfo &&
+          {isAuthenticated && user.email === "wanlingliao628@gmail.com" &&
             <li>
               <Link to="/create-new-post">Create Post</Link>
             </li>

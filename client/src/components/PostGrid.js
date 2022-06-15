@@ -64,6 +64,7 @@ const PostInfo=styled.div`
 
 :hover {
     transform: scale(1.03);
+    transition-timing-function:ease-in-out;
   }
 
 p{

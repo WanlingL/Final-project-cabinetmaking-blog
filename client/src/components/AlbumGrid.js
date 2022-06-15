@@ -6,7 +6,6 @@ import { UserContext } from "./Context/UserContext";
 const AlbumGrid = () =>{
 
     const {albums, setAlbums} = useContext(UserContext);
-    console.log("albums",albums)
 
     return(
         <Wrapper>
@@ -69,5 +68,6 @@ const AlbumInfo =styled.div`
 
 :hover {
     transform: scale(1.03);
+    transition-timing-function:ease-in-out;
   }
   `

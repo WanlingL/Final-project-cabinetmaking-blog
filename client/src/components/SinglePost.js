@@ -4,10 +4,11 @@ import React, { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import UpdatePost from "./UpdatePost";
 import { UserContext } from "./Context/UserContext";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const SinglePost = () => {
   const { postId } = useParams();
-  const {userInfo, setUserInfo} = useContext(UserContext);
+  const {isAuthenticated, user}=useAuth0()
 
   const [singlePost, setSinglePost] = useState({});
   const [postComments, setPostComments] = useState({})
@@ -17,6 +18,7 @@ const SinglePost = () => {
   const [updatedMode, setUpdateMode] = useState(false)
   const [newComment, setNewComments] = useState(false);
 
+  //disable to post anything without content
   let disabled= false;
   if(name.length===0 || comment ===0){
     disabled = true;
@@ -89,15 +91,15 @@ const SinglePost = () => {
           <h2>{singlePost.title}</h2>
           <h4>Published at {singlePost.datePosted}</h4>
           <p>{singlePost.content}</p>
-        </Content>    
+        </Content> 
 
-        {userInfo &&
+        {isAuthenticated && user.email === "wanlingliao628@gmail.com" &&
           <UpdateButton>
             <button onClick={()=> setUpdateMode(true)}>
             Edit
           </button>
           </UpdateButton>
-        }
+        } 
       </>
       }
       <Divider />
@@ -124,9 +126,7 @@ const SinglePost = () => {
             <h3>Comments:</h3>
             {postComments && Array.isArray(postComments) && postComments.map((postComment,index)=>{
               return(
-                
                 <Comments key={index}>
-                  
                   <h2>{postComment.name}</h2>
                   <h4>{postComment.time}</h4>
                   <p>{postComment.text}</p>
@@ -170,7 +170,7 @@ textarea{
 
 button{
     border-radius: 5px;
-    margin-top: 10px;
+    margin-top: 8px;
     border: none;
     padding: 8px;
     width: 100px;
@@ -192,6 +192,7 @@ const Content = styled.div`
   h2{
     color:#464543;
     font-size: 20px;
+    font-weight: 600;
   }
 
   h4{
@@ -213,13 +214,23 @@ const Divider = styled.div`
 `;
 
 const UpdateButton = styled.div`
-
+    /* align-self: flex-end; */
 `;
+
 const Container = styled.div`
   color: #6F675C; 
 
   h2{
     margin-top: 50px;
+  }
+
+  h3{
+    margin-top: 20px;
+  }
+
+  button{
+    align-items: flex-end;
+    background-color: #F7E8D8;
   }
 `;
 
@@ -230,7 +241,7 @@ const SuccessMessage = styled.div`
 
 const Comments = styled.div`
   color: #6F675C;
-  margin-top: 30px;
+  margin-top: 20px;
 
 h3{
   color:#464543;
@@ -251,7 +262,8 @@ h4{
   }
 
 p{
-  padding-top: 15px;
+  padding-top: 10px;
   font-size: 15px;
+  margin-bottom: 10px;
 }
 `;

@@ -6,7 +6,6 @@ import { UserContext } from "./Context/UserContext";
 const Upload = () => {
   const [fileInput, setFileInput] = useState("");
   const [previewSource, setPreviewSource] = useState("");
-//   const [uploadImages, setUploadImages] = useState({});
   const [success,setSuccess]=useState(false);
   const { albumId } = useParams();
 
@@ -67,7 +66,6 @@ const Upload = () => {
             body: JSON.stringify({
               id: albumId,
               url: data.data.url,
-              // imageId: data.data.public_id,
             }),
           })
           .then((response) => response.json())

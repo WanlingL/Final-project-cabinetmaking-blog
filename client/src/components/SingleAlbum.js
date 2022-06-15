@@ -9,21 +9,20 @@ import { useAuth0 } from "@auth0/auth0-react";
 const SingleAlbum = () =>{
   const { albumId } = useParams();
   const {isAuthenticated, user}=useAuth0()
-  console.log("user",user)
-  const {userInfo, setUserInfo, newUpload, setNewUpload} = useContext(UserContext);
+
+  const { newUpload, setNewUpload} = useContext(UserContext);
 
   const [singleAlbumUrl, setSingleAlbumUrl] = useState([]);
   const [singleAlbum, setSingleAlbum] = useState([]);
   const [deleteImage, setDeleteImage] = useState(false);
   
-  console.log("singleAlbumUrl", singleAlbumUrl)
 
   //calling image(url) belong to album
   useEffect(() => {
     fetch(`/api/get-album/${albumId}`)
       .then((response) => response.json())
       .then((data) => {
-        console.log("setAlbums(data,data)", data.data)
+        // console.log("setAlbums(data,data)", data.data)
         setSingleAlbum(data.data)
         setSingleAlbumUrl(data.data.url);
       })
@@ -50,13 +49,12 @@ const SingleAlbum = () =>{
     .then((response)=>response.json())
     .then((data)=>{
         setDeleteImage(!deleteImage);
-        
     });
   };
     
     return(
         <Wrapper>
-          {userInfo &&
+          {isAuthenticated && user.email === "wanlingliao628@gmail.com" &&
             <Upload />
           }
             <p>{singleAlbum.title}</p>
@@ -65,8 +63,7 @@ const SingleAlbum = () =>{
                       <ImageContainer key={index}>
                         <img src= {url} />
                         
-                        {/* //Admin setting
-                        {isAuthenticated && user.email === "wanlingliao628@gmail.com" && */}
+                        {/* //Admin setting */}
                         {isAuthenticated && user.email === "wanlingliao628@gmail.com" &&
                         <DeleteButton>
                           <button type="submit" onClick= {()=>{handleUpdatedImage(url)}}>Delete Image</button>
@@ -103,12 +100,27 @@ const Wrapper=styled.div`
 const ImageContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   margin-top: 20px;
   
   img{
     height: 300px;
   }
+
+  button{
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+    padding: 10px;
+    width: 100px;
+    font-size: 12px;
+    background-color: #F7E8D8;
+    color: #6F675C;
+    cursor: pointer;
+
+};
 `;
 
 const DeleteButton = styled.div`
+    align-self: flex-end;
 `;

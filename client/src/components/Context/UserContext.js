@@ -37,12 +37,12 @@ export const UserProvider = ({ children }) => {
         .then((response) => response.json())
         .then((data) => {
           setUserInfo(data);
-          console.log("setUserInfo", data);
+          // console.log("setUserInfo", data);
         })
         .catch((error) => {
           console.log(error);
         });
-      console.log("useAuth0 user", user);
+          // console.log("useAuth0 user", user);
     } else {
       setUserInfo(null);
     }

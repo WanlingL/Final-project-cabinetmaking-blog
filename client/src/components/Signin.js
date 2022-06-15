@@ -1,7 +1,6 @@
 // import styled from "styled-components";
 // import { useState, useEffect, useContext } from "react";
 // import { UserContext } from "./Context/UserContext";
-// import CircularProgress from '@material-ui/core/CircularProgress';
 // import { useNavigate } from "react-router-dom";
 // import {LoginButton, LogoutButton} from "../utility"
 // import { useAuth0 } from "@auth0/auth0-react";
