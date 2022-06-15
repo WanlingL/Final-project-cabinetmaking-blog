@@ -17,7 +17,7 @@ const SingleAlbum = () =>{
   const [deleteImage, setDeleteImage] = useState(false);
   
 
-  //calling image(url) belong to album
+  //calling image(url) that belong to each album
   useEffect(() => {
     fetch(`/api/get-album/${albumId}`)
       .then((response) => response.json())
@@ -117,7 +117,6 @@ const ImageContainer = styled.div`
     background-color: #F7E8D8;
     color: #6F675C;
     cursor: pointer;
-
 };
 `;
 

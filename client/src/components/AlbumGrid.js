@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { UserContext } from "./Context/UserContext";
 
 const AlbumGrid = () =>{
@@ -10,7 +10,7 @@ const AlbumGrid = () =>{
     return(
         <Wrapper>
 
-        { albums.map((album, index)=>{
+        {albums.map((album, index)=>{
             return(
                 
                 <Link to={`/album/${album.id}`}>
@@ -22,8 +22,7 @@ const AlbumGrid = () =>{
                             }}
                          />
                         <h2>{album.title}</h2>
-                    </AlbumInfo>
-                    
+                    </AlbumInfo>                   
                 </Link>
             )
         })}

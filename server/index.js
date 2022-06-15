@@ -64,7 +64,7 @@ express()
     //images==================================
     .post("/api/upload", uploadImage)
 
-    // .get("/api/images", getAllimages)//do I need this?
+    // .get("/api/images", getAllimages)--> no need this moment
 
     .post("/api/updated-image-urls", updatedImageUrls)
 

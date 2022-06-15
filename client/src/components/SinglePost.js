@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import React, { useState, useEffect, useContext } from "react";
 import moment from "moment";
 import UpdatePost from "./UpdatePost";
-import { UserContext } from "./Context/UserContext";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const SinglePost = () => {
@@ -122,8 +121,9 @@ const SinglePost = () => {
             </form>
             {success && <SuccessMessage>Comment Created</SuccessMessage> }
 
-            {/* render is probably trying to map before it is an array. what is this??How it work?? */}
+            
             <h3>Comments:</h3>
+            {/* render is trying to map before it is an array. this way can solved xx.map is not a function issue*/}
             {postComments && Array.isArray(postComments) && postComments.map((postComment,index)=>{
               return(
                 <Comments key={index}>

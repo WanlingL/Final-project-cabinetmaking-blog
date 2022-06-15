@@ -39,7 +39,6 @@ const UpdatePost = ({title, content, updateMode})=>{
             console.error('Updatd Post Error', error);
         }); 
       }
-
       const handleReturn =() =>{
         navigate("/")
       }
@@ -69,8 +68,6 @@ const Wrapper = styled.div`
     align-items: center;
     margin-top: 50px;
     margin-left: 50px;
-
-
 `;
 
 const InputGroup = styled.div`
@@ -78,10 +75,10 @@ const InputGroup = styled.div`
     flex-direction: column;
     width: 70vw;
 
-    h2{
+h2{
       color:#464543;
       font-size: 20px;
-    }
+}
     
 textarea{
     padding: 10px;
@@ -96,6 +93,7 @@ const ButtonGroup= styled.div`
     margin-right: 15px;
   }
 `;
+
 const SuccessMessage = styled.div`
   margin-top: 10px;
   color:#C89B7D;

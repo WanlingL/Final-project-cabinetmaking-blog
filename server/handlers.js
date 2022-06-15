@@ -69,7 +69,7 @@ const getSinglePost = async (request, response) => {
     await client.connect();
     const db = client.db("final_blog");
     const result = await db.collection("posts").findOne({ id });
-    console.log("result", result);
+    // console.log("result", result);
 
     if (result) {
       response.status(200).json({
@@ -135,7 +135,7 @@ const updatePost = async (request, response) => {
 
     //grab the old post
     const oldPost = await db.collection("posts").findOne({ id });
-    console.log("oldPost", oldPost);
+    // console.log("oldPost", oldPost);
 
     if(!oldPost){
       response.status(404).json({
@@ -190,7 +190,7 @@ if(comment){
   });
 }
     client.close();
-      console.log("addComment disconnected!");
+      // console.log("addComment disconnected!");
 
   } catch (err) {
       response.status(400).json({
@@ -246,7 +246,7 @@ const addNewAlbum = async (request, response) =>{
     });
 
     client.close();
-      console.log("ddNewAlbum disconnected!");
+      // console.log("ddNewAlbum disconnected!");
   } catch(err){
       response.status(400).json({
         status: 400,
@@ -266,10 +266,10 @@ const  getAllAlbums = async (request, response) =>{
     const db = client.db("final_blog");
 
     const albumInfo = await db.collection("albums").find().toArray();
-    const result = [];
-    albumInfo.forEach((album) => {
-      result.push(album);
-    });
+      const result = [];
+      albumInfo.forEach((album) => {
+        result.push(album);
+      });
 
     if (result) {
       response.status(200).json({
@@ -301,7 +301,7 @@ const getSinglealbum = async (request, response) => {
     await client.connect();
     const db = client.db("final_blog");
     const result = await db.collection("albums").findOne({ id });
-    console.log("result", result);
+    // console.log("result", result);
 
     if (result) {
       response.status(200).json({
@@ -334,18 +334,15 @@ const uploadImage = async( request, response) =>{
   const {id} = request.body
   try{
     const image = request.body.data;
-    const uploadResponse= await cloudinary.uploader.upload(image, {
-      folder: "final_project",
-    })
-    console.log("uploadResponse",uploadResponse);
+    const uploadResponse= await cloudinary.uploader.upload(image, {folder: "final_project" })
+    // console.log("uploadResponse",uploadResponse);
 
+    //put images into mongodb==================================
     await client.connect();
     const db = client.db("final_blog");
 
+    //adding an albumId to each image
     await db.collection("uploadImages").insertOne({...uploadResponse , albumId: id});
-    //image[{"url":_________}] 
-    //id of album
-    //findOne
 
     response.status(200).json({
       status: 200,
@@ -362,7 +359,7 @@ const uploadImage = async( request, response) =>{
   }
 };
 
-// //get all images from cloudinary---------------------------not 
+// //get all images from cloudinary--------------no need it this moment
 // const getAllimages = async (request, response) =>{
 
 //   try{

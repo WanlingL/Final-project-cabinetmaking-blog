@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 import moment from "moment";
 import { UserContext } from "./Context/UserContext";
-import Upload from "./Upload";
-
 
 const CreateNewPost =()=>{
     const navigate = useNavigate();

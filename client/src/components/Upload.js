@@ -53,7 +53,7 @@ const Upload = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        //upload images to selected album
+        //upload images to selected album by adding albumId and urls
         if (data.status === 200) {
             setSuccess(true)
             

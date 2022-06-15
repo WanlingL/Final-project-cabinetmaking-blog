@@ -18,5 +18,4 @@ const Wrapper = styled.div`
 	flex-wrap: wrap;
   align-content: center;
   align-items: center;
-
 `;

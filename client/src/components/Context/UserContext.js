@@ -5,19 +5,17 @@ import { useAuth0 } from "@auth0/auth0-react";
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-
-  const [userInfo, setUserInfo] = useState(null);
   const { user, isAuthenticated } = useAuth0();
 
+  const [userInfo, setUserInfo] = useState(null);
   const [posts, setPosts] = useState([]);
-
-  //refresh the new post/delete in effect dependency in the singleAlbum(dummy state)
-  const [ newPost, setNewPost] = useState(false)
-  const [newUpload, setNewUpload] = useState(false);
-  const [newAlbum, setNewAlbum] = useState(false);
-
   const [albums, setAlbums] = useState([]);
   const [isLoaded, setIsLoaded] = useState(false);
+
+  //in order to auto refresh the new post/delete images, creating these dummy useStates and placed in fetch useEffect dependency
+  const [newPost , setNewPost] = useState(false)
+  const [newUpload, setNewUpload] = useState(false);
+  const [newAlbum, setNewAlbum] = useState(false);
 
 
   //get user-----------------------------------------
